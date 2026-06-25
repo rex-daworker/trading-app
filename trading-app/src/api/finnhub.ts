@@ -5,6 +5,7 @@ export interface Quote {
   c: number; // current price
   d: number; // change today (absolute)
   dp: number; // change today (percent)
+  pc: number; // previous close
 }
 
 export async function fetchQuote(symbol: string): Promise<Quote> {
