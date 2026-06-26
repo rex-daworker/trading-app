@@ -1,5 +1,8 @@
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
+import Analytics from './pages/Analytics'
+import Settings from './pages/Settings'
 import AuthPage from './pages/AuthPage'
 import { useAuth } from './context/AuthContext'
 
@@ -8,13 +11,26 @@ function App() {
 
   if (loading) {
     return (
-      <Layout>
-        <p className="text-gray-500 dark:text-gray-400">Loading…</p>
-      </Layout>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+        Loading…
+      </div>
     )
   }
 
-  return <Layout>{user ? <Dashboard /> : <AuthPage />}</Layout>
+  if (!user) {
+    return <AuthPage />
+  }
+
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
+  )
 }
 
 export default App

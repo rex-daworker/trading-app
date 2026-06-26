@@ -17,3 +17,23 @@ export async function fetchQuote(symbol: string): Promise<Quote> {
   }
   return res.json() as Promise<Quote>;
 }
+
+export interface SearchResult {
+  symbol: string
+  description: string
+  type: string
+}
+
+interface SearchResponse {
+  count: number
+  result: SearchResult[]
+}
+
+export async function searchSymbols(query: string): Promise<SearchResult[]> {
+  const res = await fetch(`${BASE_URL}/search?q=${encodeURIComponent(query)}&token=${API_KEY}`)
+  if (!res.ok) {
+    throw new Error(`Search failed (${res.status})`)
+  }
+  const data = (await res.json()) as SearchResponse
+  return data.result
+}

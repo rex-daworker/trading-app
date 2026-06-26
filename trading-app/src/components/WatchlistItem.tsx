@@ -6,13 +6,14 @@ import PriceChart from "./PriceChart";
 import type { PricePoint } from "./PriceChart";
 
 interface WatchlistItemProps {
-  entry: WatchlistEntry;
+  entry: WatchlistEntry
+  onRemove?: () => void
 }
 
 const boxClasses =
   "w-52 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800";
 
-function WatchlistItem({ entry }: WatchlistItemProps) {
+function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
   const {
     data: quote,
     isPending,
@@ -61,6 +62,7 @@ function WatchlistItem({ entry }: WatchlistItemProps) {
       stock={stock}
       expanded={expanded}
       onClick={() => setExpanded(!expanded)}
+      onRemove={onRemove}
     >
       {expanded && (
         <div className="mt-3">
