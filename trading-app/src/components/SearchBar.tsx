@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Search } from 'lucide-react'
 import { useDebouncedValue } from '../hooks/useDebouncedValue'
 import { useSymbolSearch } from '../hooks/useSymbolSearch'
 import type { WatchlistEntry } from '../types/stock'
@@ -20,12 +21,16 @@ function SearchBar({ onAdd, existingSymbols }: SearchBarProps) {
 
   return (
     <div className="relative mb-6 w-full max-w-sm">
+      <Search
+        size={16}
+        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+      />
       <input
         type="text"
         placeholder="Search a symbol (e.g. MSFT)…"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-full rounded-md border border-gray-300 px-3 py-2 dark:border-gray-600 dark:bg-gray-800"
+        className="w-full rounded-md border border-gray-300 py-2 pl-9 pr-3 dark:border-gray-600 dark:bg-gray-800"
       />
       {debouncedQuery.trim().length > 0 && (
         <div className="absolute z-10 mt-1 max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">

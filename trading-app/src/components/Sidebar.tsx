@@ -1,10 +1,12 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from "react-router-dom";
+import { LayoutDashboard, LineChart, Newspaper, Settings } from "lucide-react";
 
 const navItems = [
-  { label: 'Dashboard', to: '/' },
-  { label: 'Analytics', to: '/analytics' },
-  { label: 'Settings', to: '/settings' },
-]
+  { label: "Dashboard", to: "/", icon: LayoutDashboard },
+  { label: "Analytics", to: "/analytics", icon: LineChart },
+  { label: "News", to: "/news", icon: Newspaper },
+  { label: "Settings", to: "/settings", icon: Settings },
+];
 
 function Sidebar() {
   return (
@@ -15,21 +17,22 @@ function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === '/'}
+            end={item.to === "/"}
             className={({ isActive }) =>
-              `rounded-md px-3 py-2 text-sm ${
+              `flex items-center gap-2 rounded-md px-3 py-2 text-sm ${
                 isActive
-                  ? 'bg-blue-50 font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300'
-                  : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
+                  ? "bg-blue-50 font-medium text-blue-700 dark:bg-blue-950 dark:text-blue-300"
+                  : "text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700"
               }`
             }
           >
+            <item.icon size={16} />
             {item.label}
           </NavLink>
         ))}
       </nav>
     </aside>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;

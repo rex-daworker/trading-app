@@ -37,3 +37,29 @@ export async function searchSymbols(query: string): Promise<SearchResult[]> {
   const data = (await res.json()) as SearchResponse
   return data.result
 }
+
+export interface NewsArticle {
+  id: number
+  headline: string
+  summary: string
+  source: string
+  url: string
+  datetime: number // unix seconds
+  image: string
+  related: string
+}
+
+export async function fetchCompanyNews(symbol: string): Promise<NewsArticle[]> {
+  const to = new Date()
+  const from = new Date()
+  from.setDate(from.getDate() - 7)
+  const fmt = (d: Date) => d.toISOString().slice(0, 10)
+
+  const res = await fetch(
+    `${BASE_URL}/company-news?symbol=${symbol}&from=${fmt(from)}&to=${fmt(to)}&token=${API_KEY}`,
+  )
+  if (!res.ok) {
+    throw new Error(`News request failed for ${symbol} (${res.status})`)
+  }
+  return res.json() as Promise<NewsArticle[]>
+}
