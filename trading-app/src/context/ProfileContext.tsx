@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { doc, onSnapshot } from 'firebase/firestore'
+import { doc, onSnapshot, setDoc } from 'firebase/firestore'
 import { db } from '../lib/firebase'
 import { useAuth } from './AuthContext'
 
@@ -14,6 +14,7 @@ export interface Profile {
 interface ProfileContextValue {
   profile: Profile | null
   loading: boolean
+  updateProfile: (updates: Partial<Profile>) => Promise<void>
 }
 
 const ProfileContext = createContext<ProfileContextValue | undefined>(undefined)
@@ -39,8 +40,15 @@ export function ProfileProvider({ children }: { children: ReactNode }) {
     return unsub
   }, [user])
 
+  const updateProfile = async (updates: Partial<Profile>) => {
+    if (!user) return
+    await setDoc(doc(db, 'profiles', user.uid), updates, { merge: true })
+  }
+
   return (
-    <ProfileContext.Provider value={{ profile, loading }}>{children}</ProfileContext.Provider>
+    <ProfileContext.Provider value={{ profile, loading, updateProfile }}>
+      {children}
+    </ProfileContext.Provider>
   )
 }
 
