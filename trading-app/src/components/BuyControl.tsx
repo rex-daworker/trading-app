@@ -1,45 +1,52 @@
-import { useState } from 'react'
-import { usePortfolio } from '../context/PortfolioContext'
-import { useCurrency } from '../context/CurrencyContext'
+import { useState } from "react";
+import { usePortfolio } from "../context/PortfolioContext";
+import { useCurrency } from "../context/CurrencyContext";
+import { useToast } from "../context/ToastContext";
 
 interface BuyControlProps {
-  symbol: string
-  price: number
+  symbol: string;
+  price: number;
 }
 
 function BuyControl({ symbol, price }: BuyControlProps) {
-  const { cash, buy } = usePortfolio()
-  const { currency, convert } = useCurrency()
-  const [qty, setQty] = useState('')
-  const [error, setError] = useState('')
-  const [busy, setBusy] = useState(false)
+  const { cash, buy } = usePortfolio();
+  const { format } = useCurrency();
+  const { showToast } = useToast();
+  const [qty, setQty] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
 
-  const shares = Number(qty)
-  const cost = shares * price
+  const shares = Number(qty);
+  const cost = shares * price;
 
   const handleBuy = async () => {
-    setError('')
+    setError("");
     if (!Number.isFinite(shares) || shares <= 0) {
-      setError('Enter a positive quantity')
-      return
+      setError("Enter a positive quantity");
+      return;
     }
     if (cost > cash) {
-      setError('Not enough cash')
-      return
+      setError("Not enough cash");
+      return;
     }
-    setBusy(true)
+    setBusy(true);
     try {
-      await buy(symbol, shares, price)
-      setQty('')
+      await buy(symbol, shares, price);
+      setQty("");
+      showToast(`Bought ${shares} ${symbol}`, "success");
     } catch {
-      setError('Trade failed')
+      setError("Trade failed");
+      showToast("Trade failed", "error");
     } finally {
-      setBusy(false)
+      setBusy(false);
     }
-  }
+  };
 
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="mt-3 flex flex-wrap items-center gap-2"
+      onClick={(e) => e.stopPropagation()}
+    >
       <input
         type="number"
         min="0"
@@ -57,12 +64,12 @@ function BuyControl({ symbol, price }: BuyControlProps) {
       </button>
       {shares > 0 && !error && (
         <span className="text-xs text-gray-500 dark:text-gray-400">
-          ≈ {currency} {convert(cost).toFixed(2)}
+          ≈ {format(cost)}
         </span>
       )}
       {error && <span className="text-xs text-red-600">{error}</span>}
     </div>
-  )
+  );
 }
 
-export default BuyControl
+export default BuyControl;

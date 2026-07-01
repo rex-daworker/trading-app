@@ -5,7 +5,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from './context/ThemeContext'
 import { CurrencyProvider } from './context/CurrencyContext'
 import { AuthProvider } from './context/AuthContext'
+import { ProfileProvider } from './context/ProfileContext'
+import { WatchlistProvider } from './context/WatchlistContext'
 import { PortfolioProvider } from './context/PortfolioContext'
+import { ToastProvider } from './context/ToastContext'
+import { ConfirmProvider } from './context/ConfirmContext'
 import './index.css'
 import App from './App.tsx'
 
@@ -18,9 +22,17 @@ createRoot(document.getElementById('root')!).render(
         <QueryClientProvider client={queryClient}>
           <CurrencyProvider>
             <AuthProvider>
-              <PortfolioProvider>
-                <App />
-              </PortfolioProvider>
+              <ProfileProvider>
+                <WatchlistProvider>
+                  <PortfolioProvider>
+                    <ToastProvider>
+                      <ConfirmProvider>
+                        <App />
+                      </ConfirmProvider>
+                    </ToastProvider>
+                  </PortfolioProvider>
+                </WatchlistProvider>
+              </ProfileProvider>
             </AuthProvider>
           </CurrencyProvider>
         </QueryClientProvider>

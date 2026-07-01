@@ -1,38 +1,34 @@
-import { useState } from 'react'
-import { useQuotes } from '../hooks/useQuotes'
-import { useCompanyNews } from '../hooks/useCompanyNews'
-import type { WatchlistEntry } from '../types/stock'
+import { useQuotes } from "../hooks/useQuotes";
+import { useCompanyNews } from "../hooks/useCompanyNews";
+import { useWatchlist } from "../context/WatchlistContext";
 
 interface Mover {
-  symbol: string
-  dp: number
+  symbol: string;
+  dp: number;
 }
 
 function timeAgo(unixSeconds: number) {
-  const diff = Date.now() / 1000 - unixSeconds
-  const hours = Math.floor(diff / 3600)
-  if (hours < 1) return 'just now'
-  if (hours < 24) return `${hours}h ago`
-  return `${Math.floor(hours / 24)}d ago`
+  const diff = Date.now() / 1000 - unixSeconds;
+  const hours = Math.floor(diff / 3600);
+  if (hours < 1) return "just now";
+  if (hours < 24) return `${hours}h ago`;
+  return `${Math.floor(hours / 24)}d ago`;
 }
 
 function News() {
-  const [watchlist] = useState<WatchlistEntry[]>(() => {
-    const saved = localStorage.getItem('watchlist')
-    return saved ? (JSON.parse(saved) as WatchlistEntry[]) : []
-  })
+  const { watchlist } = useWatchlist();
 
-  const symbols = watchlist.map((e) => e.symbol)
-  const quotes = useQuotes(symbols)
+  const symbols = watchlist.map((e) => e.symbol);
+  const quotes = useQuotes(symbols);
 
   const movers: Mover[] = quotes
     .map((q, i) => (q.data ? { symbol: symbols[i], dp: q.data.dp } : null))
     .filter((x): x is Mover => x !== null)
     .sort((a, b) => Math.abs(b.dp) - Math.abs(a.dp))
-    .slice(0, 3)
+    .slice(0, 3);
 
-  const moverSymbols = movers.map((m) => m.symbol)
-  const newsResults = useCompanyNews(moverSymbols)
+  const moverSymbols = movers.map((m) => m.symbol);
+  const newsResults = useCompanyNews(moverSymbols);
 
   return (
     <div>
@@ -48,20 +44,24 @@ function News() {
       )}
 
       {symbols.length > 0 && movers.length === 0 && (
-        <p className="mt-8 text-gray-500 dark:text-gray-400">Finding your top movers…</p>
+        <p className="mt-8 text-gray-500 dark:text-gray-400">
+          Finding your top movers…
+        </p>
       )}
 
       <div className="mt-6 space-y-8">
         {movers.map((m, i) => {
-          const result = newsResults[i]
-          const articles = (result?.data ?? []).slice(0, 5)
-          const up = m.dp >= 0
+          const result = newsResults[i];
+          const articles = (result?.data ?? []).slice(0, 5);
+          const up = m.dp >= 0;
           return (
             <section key={m.symbol}>
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-semibold">{m.symbol}</h3>
-                <span className={`text-sm ${up ? 'text-green-600' : 'text-red-600'}`}>
-                  {up ? '+' : ''}
+                <span
+                  className={`text-sm ${up ? "text-green-600" : "text-red-600"}`}
+                >
+                  {up ? "+" : ""}
                   {m.dp.toFixed(2)}%
                 </span>
               </div>
@@ -70,7 +70,9 @@ function News() {
                 <p className="mt-2 text-sm text-gray-400">Loading news…</p>
               )}
               {result?.isError && (
-                <p className="mt-2 text-sm text-red-600">Couldn't load news for {m.symbol}.</p>
+                <p className="mt-2 text-sm text-red-600">
+                  Couldn't load news for {m.symbol}.
+                </p>
               )}
               {result && !result.isPending && articles.length === 0 && (
                 <p className="mt-2 text-sm text-gray-400">No recent news.</p>
@@ -96,11 +98,11 @@ function News() {
                 ))}
               </ul>
             </section>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }
 
-export default News
+export default News;

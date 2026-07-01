@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { usePortfolio } from '../context/PortfolioContext'
+import { useToast } from '../context/ToastContext'
 
 interface SellControlProps {
   symbol: string
@@ -9,6 +10,7 @@ interface SellControlProps {
 
 function SellControl({ symbol, maxShares, price }: SellControlProps) {
   const { sell } = usePortfolio()
+  const { showToast } = useToast()
   const [qty, setQty] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -33,8 +35,10 @@ function SellControl({ symbol, maxShares, price }: SellControlProps) {
     try {
       await sell(symbol, shares, price)
       setQty('')
+      showToast(`Sold ${shares} ${symbol}`, 'success')
     } catch {
       setError('Failed')
+      showToast('Trade failed', 'error')
     } finally {
       setBusy(false)
     }

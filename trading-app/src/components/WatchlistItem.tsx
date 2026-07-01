@@ -4,10 +4,11 @@ import { useQuote } from "../hooks/useQuote";
 import StockCard from "./StockCard";
 import PriceChart from "./PriceChart";
 import type { PricePoint } from "./PriceChart";
+import Skeleton from "./Skeleton";
 
 interface WatchlistItemProps {
-  entry: WatchlistEntry
-  onRemove?: () => void
+  entry: WatchlistEntry;
+  onRemove?: () => void;
 }
 
 const boxClasses =
@@ -34,8 +35,12 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
 
   if (isPending) {
     return (
-      <div className={`${boxClasses} animate-pulse text-gray-400`}>
-        Loading {entry.symbol}…
+      <div className={boxClasses}>
+        <Skeleton className="h-4 w-16" />
+        <Skeleton className="mt-2 h-3 w-24" />
+        <Skeleton className="mt-3 h-6 w-28" />
+        <Skeleton className="mt-2 h-3 w-16" />
+        <Skeleton className="mt-3 h-8 w-24" />
       </div>
     );
   }
