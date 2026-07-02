@@ -34,7 +34,45 @@ function Sidebar() {
 
   return (
     <aside className="flex w-56 shrink-0 flex-col border-r border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-      <div className="mb-4 px-3 text-lg font-bold">TradeFlow</div>
+      <div className="mb-4 flex items-center gap-2 px-3">
+        <svg
+          width="26"
+          height="26"
+          viewBox="0 0 100 100"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <defs>
+            <linearGradient
+              id="tf-logo"
+              x1="0"
+              y1="0"
+              x2="100"
+              y2="100"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#3b82f6" />
+              <stop offset="1" stopColor="#8b5cf6" />
+            </linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="26" fill="url(#tf-logo)" />
+          <path
+            d="M22 68 L44 46 L56 56 L76 32"
+            stroke="#ffffff"
+            strokeWidth="9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M62 30 L78 30 L78 46"
+            stroke="#ffffff"
+            strokeWidth="9"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <span className="text-lg font-bold">TradeFlow</span>
+      </div>
 
       <NavLink
         to="/account"
