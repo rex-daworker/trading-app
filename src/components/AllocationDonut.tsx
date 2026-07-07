@@ -70,15 +70,15 @@ function AllocationDonut({ data, format }: AllocationDonutProps) {
         {data.map((entry, i) => {
           const pct = total > 0 ? ((entry.value / total) * 100).toFixed(1) : '0'
           return (
-            <li key={entry.name} className="flex items-center justify-between text-sm">
-              <span className="flex items-center gap-2">
+            <li key={entry.name} className="flex min-w-0 items-center justify-between gap-2 text-sm">
+              <span className="flex shrink-0 items-center gap-2">
                 <span
                   className="inline-block h-3 w-3 rounded-sm"
                   style={{ background: colorFor(entry, i) }}
                 />
                 <span className="font-medium">{entry.name}</span>
               </span>
-              <span className="text-gray-500 dark:text-gray-400">
+              <span className="truncate text-right text-gray-500 dark:text-gray-400">
                 {format(entry.value)} · {pct}%
               </span>
             </li>

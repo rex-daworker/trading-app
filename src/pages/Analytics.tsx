@@ -100,8 +100,8 @@ function Analytics() {
                 <tr className="border-b border-gray-200 text-xs uppercase tracking-wide text-gray-500 dark:border-gray-700 dark:text-gray-400">
                   <th className="py-2 pr-4">Symbol</th>
                   <th className="py-2 pr-4">Shares</th>
-                  <th className="py-2 pr-4">Avg cost</th>
-                  <th className="py-2 pr-4">Price</th>
+                  <th className="hidden py-2 pr-4 sm:table-cell">Avg cost</th>
+                  <th className="hidden py-2 pr-4 sm:table-cell">Price</th>
                   <th className="py-2 pr-4">Value</th>
                   <th className="py-2 pr-4">P/L</th>
                   <th className="py-2 pr-4">Sell</th>
@@ -122,8 +122,8 @@ function Analytics() {
                     >
                       <td className="py-2 pr-4 font-medium">{h.symbol}</td>
                       <td className="py-2 pr-4">{h.shares}</td>
-                      <td className="py-2 pr-4">{format(h.avgCost)}</td>
-                      <td className="py-2 pr-4">
+                      <td className="hidden py-2 pr-4 sm:table-cell">{format(h.avgCost)}</td>
+                      <td className="hidden py-2 pr-4 sm:table-cell">
                         {price === undefined ? "—" : format(price)}
                       </td>
                       <td className="py-2 pr-4">{format(value)}</td>

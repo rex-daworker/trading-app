@@ -17,7 +17,7 @@ function Layout() {
       <BrandWatermark />
       <div className="relative z-10 flex min-h-screen">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <div className="flex flex-1 flex-col">
+        <div className="flex min-w-0 flex-1 flex-col">
           <header className="flex items-center justify-between gap-3 border-b border-gray-200 bg-white px-4 py-4 dark:border-gray-700 dark:bg-gray-800 md:justify-end md:px-8">
             <button
               onClick={() => setSidebarOpen(true)}
