@@ -10,11 +10,11 @@ function Layout() {
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+sidebar
   return (
-    <div className="relative min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <div className="relative min-h-screen overflow-x-hidden bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+      {" "}
       <BrandWatermark />
-
       <div className="relative z-10 flex min-h-screen">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         <div className="flex flex-1 flex-col">

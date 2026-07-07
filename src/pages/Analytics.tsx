@@ -66,7 +66,7 @@ function Analytics() {
         Your paper-trading portfolio
       </p>
 
-      <div className="mt-6 flex flex-wrap gap-4">
+      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <StatCard label="Cash" value={cash} format={format} />
         <StatCard
           label="Holdings value"
