@@ -10,7 +10,7 @@ function Layout() {
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-sidebar
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
       {" "}
