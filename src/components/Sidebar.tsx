@@ -4,7 +4,7 @@ import {
   LineChart,
   Newspaper,
   Settings,
-  ChevronsRight,
+  ChevronsLeft,
 } from "lucide-react";
 import { useProfile } from "../context/ProfileContext";
 import { useAuth } from "../context/AuthContext";
@@ -103,7 +103,7 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
             className="rounded-md p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 md:hidden"
             aria-label="Close menu"
           >
-            <ChevronsRight size={18} />
+            <ChevronsLeft size={18} />
           </button>
         </div>
 
