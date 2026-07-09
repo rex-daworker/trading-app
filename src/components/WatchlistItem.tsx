@@ -26,6 +26,7 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
 
   useEffect(() => {
     if (!quote) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing chart history from live external quote data via updater function, not an unguarded sync
     setHistory((prev) => {
       const seeded =
         prev.length === 0 ? [{ t: dataUpdatedAt - 1, price: quote.pc }] : prev;
