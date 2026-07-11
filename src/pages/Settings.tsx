@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Check } from "lucide-react";
 import { useCurrency, CURRENCIES } from "../context/CurrencyContext";
 import type { Currency } from "../context/CurrencyContext";
-import { useAlerts } from "../context/AlertsContext";
 
 const CURRENCY_META: Record<Currency, { name: string; symbol: string }> = {
   USD: { name: "US Dollar", symbol: "$" },
@@ -13,7 +12,6 @@ const CURRENCY_META: Record<Currency, { name: string; symbol: string }> = {
 
 function Settings() {
   const { currency, setCurrency, rate } = useCurrency();
-  const { alerts, removeAlert } = useAlerts();
   const [notifStatus, setNotifStatus] = useState(
     typeof Notification !== "undefined" ? Notification.permission : "default",
   );
@@ -82,39 +80,6 @@ function Settings() {
           >
             Enable notifications
           </button>
-        )}
-      </div>
-
-      <div className="mt-8 max-w-sm">
-        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Price alerts
-        </label>
-        {alerts.length === 0 ? (
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            No alerts set yet. Expand a stock on the Dashboard to add one.
-          </p>
-        ) : (
-          <ul className="mt-2 divide-y divide-gray-200 overflow-hidden rounded-lg border border-gray-200 dark:divide-gray-700 dark:border-gray-700">
-            {alerts.map((a) => (
-              <li
-                key={a.id}
-                className="flex items-center justify-between px-4 py-3 text-sm"
-              >
-                <span>
-                  <span className="font-medium">{a.symbol}</span>{" "}
-                  <span className="text-gray-500 dark:text-gray-400">
-                    {a.direction} {a.targetPrice} {a.triggered && "· triggered"}
-                  </span>
-                </span>
-                <button
-                  onClick={() => removeAlert(a.id)}
-                  className="text-xs text-red-500 hover:underline"
-                >
-                  Remove
-                </button>
-              </li>
-            ))}
-          </ul>
         )}
       </div>
     </div>

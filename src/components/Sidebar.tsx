@@ -1,17 +1,19 @@
 import { NavLink } from "react-router-dom";
+import { useProfile } from "../context/ProfileContext";
+import { useAuth } from "../context/AuthContext";
 import {
   LayoutDashboard,
   LineChart,
   Newspaper,
   Settings,
+  Bell,
   ChevronsLeft,
 } from "lucide-react";
-import { useProfile } from "../context/ProfileContext";
-import { useAuth } from "../context/AuthContext";
 
 const navItems = [
   { label: "Dashboard", to: "/", icon: LayoutDashboard },
   { label: "Analytics", to: "/analytics", icon: LineChart },
+  { label: "Alerts", to: "/alerts", icon: Bell },
   { label: "News", to: "/news", icon: Newspaper },
   { label: "Settings", to: "/settings", icon: Settings },
 ];

@@ -7,6 +7,7 @@ import Settings from "./pages/Settings";
 import Account from "./pages/Account";
 import AuthPage from "./pages/AuthPage";
 import { useAuth } from "./context/AuthContext";
+import Alerts from "./pages/Alerts";
 
 function App() {
   const { user, loading } = useAuth();
@@ -32,6 +33,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/account" element={<Account />} />
         <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/alerts" element={<Alerts />} />
       </Route>
     </Routes>
   );
