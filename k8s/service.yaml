@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tradeflow-service
+spec:
+  type: NodePort
+  selector:
+    app: tradeflow
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30080

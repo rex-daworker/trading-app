@@ -1,23 +1,23 @@
-import { useState } from 'react'
-import { Search } from 'lucide-react'
-import { useDebouncedValue } from '../hooks/useDebouncedValue'
-import { useSymbolSearch } from '../hooks/useSymbolSearch'
-import type { WatchlistEntry } from '../types/stock'
+import { useState } from "react";
+import { Search } from "lucide-react";
+import { useDebouncedValue } from "../hooks/useDebouncedValue";
+import { useSymbolSearch } from "../hooks/useSymbolSearch";
+import type { WatchlistEntry } from "../types/stock";
 
 interface SearchBarProps {
-  onAdd: (entry: WatchlistEntry) => void
-  existingSymbols: string[]
+  onAdd: (entry: WatchlistEntry) => void;
+  existingSymbols: string[];
 }
 
 function SearchBar({ onAdd, existingSymbols }: SearchBarProps) {
-  const [query, setQuery] = useState('')
-  const debouncedQuery = useDebouncedValue(query, 400)
-  const { data: results, isFetching } = useSymbolSearch(debouncedQuery)
+  const [query, setQuery] = useState("");
+  const debouncedQuery = useDebouncedValue(query, 400);
+  const { data: results, isFetching } = useSymbolSearch(debouncedQuery);
 
   const handleAdd = (symbol: string, description: string) => {
-    onAdd({ symbol, name: description, currency: 'USD' })
-    setQuery('')
-  }
+    onAdd({ symbol, name: description, currency: "USD" });
+    setQuery("");
+  };
 
   return (
     <div className="relative mb-6 w-full max-w-sm">
@@ -34,14 +34,16 @@ function SearchBar({ onAdd, existingSymbols }: SearchBarProps) {
       />
       {debouncedQuery.trim().length > 0 && (
         <div className="absolute z-10 mt-1 max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
-          {isFetching && <p className="p-3 text-sm text-gray-400">Searching…</p>}
+          {isFetching && (
+            <p className="p-3 text-sm text-gray-400">Searching…</p>
+          )}
           {!isFetching && results && results.length === 0 && (
             <p className="p-3 text-sm text-gray-400">No matches.</p>
           )}
           {!isFetching &&
             results &&
             results.slice(0, 8).map((r) => {
-              const already = existingSymbols.includes(r.symbol)
+              const already = existingSymbols.includes(r.symbol);
               return (
                 <button
                   key={r.symbol}
@@ -50,17 +52,21 @@ function SearchBar({ onAdd, existingSymbols }: SearchBarProps) {
                   className="flex w-full items-center justify-between px-3 py-2 text-left text-sm hover:bg-gray-100 disabled:opacity-40 dark:hover:bg-gray-700"
                 >
                   <span>
-                    <span className="font-medium">{r.symbol}</span>{' '}
-                    <span className="text-gray-500 dark:text-gray-400">{r.description}</span>
+                    <span className="font-medium">{r.symbol}</span>{" "}
+                    <span className="text-gray-500 dark:text-gray-400">
+                      {r.description}
+                    </span>
                   </span>
-                  <span className="text-xs text-blue-600">{already ? 'Added' : '+ Add'}</span>
+                  <span className="text-xs text-blue-600">
+                    {already ? "Added" : "+ Add"}
+                  </span>
                 </button>
-              )
+              );
             })}
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default SearchBar
+export default SearchBar;

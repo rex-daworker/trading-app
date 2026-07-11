@@ -5,6 +5,7 @@ import StockCard from "./StockCard";
 import PriceChart from "./PriceChart";
 import type { PricePoint } from "./PriceChart";
 import Skeleton from "./Skeleton";
+import AlertBell from "./AlertBell";
 
 interface WatchlistItemProps {
   entry: WatchlistEntry;
@@ -72,6 +73,9 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
     >
       {expanded && (
         <div className="mt-3">
+          <div className="mb-2 flex justify-end">
+            <AlertBell symbol={entry.symbol} currentPrice={quote.c} />
+          </div>
           <PriceChart data={history} up={isUp} />
           <p className="mt-1 text-xs text-gray-400">
             Live — a new point every 15s

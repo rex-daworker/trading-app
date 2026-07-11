@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tradeflow
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tradeflow
+  template:
+    metadata:
+      labels:
+        app: tradeflow
+    spec:
+      containers:
+        - name: tradeflow
+          image: tradeflow:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80

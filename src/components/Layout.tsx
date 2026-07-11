@@ -5,11 +5,13 @@ import { useTheme } from "../context/ThemeContext";
 import { useAuth } from "../context/AuthContext";
 import Sidebar from "./Sidebar";
 import BrandWatermark from "./BrandWatermark";
+import { useAlertMonitor } from "../hooks/useAlertMonitor";
 
 function Layout() {
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useAlertMonitor();
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
