@@ -38,7 +38,7 @@ export function useAlertMonitor() {
           },
         );
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps -- priceKey is a derived string proxy for price changes, intentional
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- priceKey is a derived string proxy for price/alert changes; including active/markTriggered/priceBySymbol directly would cause an infinite loop since they're recreated every render
   }, [priceKey]);
 }
