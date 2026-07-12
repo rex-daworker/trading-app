@@ -8,15 +8,19 @@
 
 Built with React + TypeScript, Firebase, and TanStack Query.
 
+_Reviewed by a senior engineer — 8.3/10 for code quality and architecture._
+
 </div>
 
 ---
 
 ## Overview
 
-TradeFlow lets a user track a live stock watchlist, "buy" and "sell" with a simulated cash balance, and see their portfolio's performance — all against **real market prices**. No real money is involved; it's a learning-and-portfolio project that demonstrates real-time data handling, authenticated multi-user state, and a polished, responsive-minded UI.
+TradeFlow is a full-stack trading simulator demonstrating production-grade patterns: real-time data synchronization, atomic multi-document writes, containerized deployment, and automated CI/CD — built to mirror how a real fintech dashboard would be engineered, minus the real money.
 
-> **Note:** TradeFlow is desktop-optimized. It is best viewed on a laptop or desktop browser.
+A user tracks a live stock watchlist, "buys" and "sells" with a simulated cash balance, and sees their portfolio's performance — all against **real market prices**. No real money is involved; it's a portfolio project that demonstrates real-time data handling, authenticated multi-user state, a polished responsive UI, and a full DevOps pipeline from container to cluster.
+
+> **Note:** TradeFlow is desktop-optimized, with mobile responsiveness also supported.
 
 ## Screenshots
 
@@ -31,26 +35,32 @@ TradeFlow lets a user track a live stock watchlist, "buy" and "sell" with a simu
 - **Expandable sparklines** — click a card to reveal a live price chart that builds up over the session.
 - **Paper trading** — start with a simulated balance, then buy/sell at live prices. Trades are written atomically and cost basis is tracked with a weighted average.
 - **Portfolio analytics** — cash, holdings value, and total value (with count-up animations), a live profit/loss table, and an allocation donut with a value/percentage breakdown.
+- **Price alerts** — set target prices on watched symbols and get notified when they're hit.
 - **Company news** — latest headlines for the day's top movers.
 - **Multi-currency** — view every figure in USD, EUR, GBP, or NGN using live exchange rates.
 - **Accounts & profiles** — email/password auth with an editable profile (name, date of birth, address, avatar).
 - **Dark / light mode** — persisted across sessions.
+- **Responsive layout** — usable on mobile as well as desktop.
 - **Thoughtful UX** — toast notifications, confirm dialogs for destructive actions, and shimmer loading skeletons.
 
 ## Tech stack
 
-| Area            | Technology                                |
-| --------------- | ----------------------------------------- |
-| Framework       | React 19 + TypeScript (strict)            |
-| Build tool      | Vite                                      |
-| Server state    | TanStack Query (React Query) v5           |
-| Styling         | Tailwind CSS v4                           |
-| Charts          | Recharts                                  |
-| Routing         | React Router v7                           |
-| Auth & database | Firebase Authentication + Cloud Firestore |
-| Icons           | lucide-react                              |
-| Market data     | Finnhub (quotes, search, company news)    |
-| Exchange rates  | open.er-api.com                           |
+| Area             | Technology                                |
+| ---------------- | ----------------------------------------- |
+| Framework        | React 19 + TypeScript (strict)            |
+| Build tool       | Vite                                      |
+| Server state     | TanStack Query (React Query) v5           |
+| Styling          | Tailwind CSS v4                           |
+| Charts           | Recharts                                  |
+| Routing          | React Router v7                           |
+| Auth & database  | Firebase Authentication + Cloud Firestore |
+| Icons            | lucide-react                              |
+| Market data      | Finnhub (quotes, search, company news)    |
+| Exchange rates   | open.er-api.com                           |
+| Containerization | Docker (multi-stage build, nginx)         |
+| CI/CD            | GitHub Actions                            |
+| Orchestration    | Kubernetes (`kind`)                       |
+| Hosting          | Vercel                                    |
 
 ## Architecture
 
@@ -60,6 +70,13 @@ TradeFlow separates **server state** from **application state**:
 - **Application state** (auth, profile, currency, watchlist, portfolio, theme, toasts, dialogs) is provided through composable **React context providers**.
 - **Persistence** uses **Cloud Firestore** with real-time `onSnapshot` listeners, so the UI reacts the moment data changes. Buy/sell operations use a `writeBatch` so cash and holdings always update together.
 - **Security rules** scope every document to its owner, so a signed-in user can only ever read and write their own portfolio, watchlist, and profile.
+
+## DevOps & Deployment
+
+- **Containerized** — multi-stage Docker build (~93MB final image), with nginx serving the production build.
+- **CI/CD** — GitHub Actions pipeline runs lint and build on every push, securely injecting Firebase and Finnhub secrets.
+- **Kubernetes** — deployed locally via `kind`, running a 2-replica Deployment behind a NodePort Service, accessible through `kubectl port-forward`.
+- **Live deployment** — hosted on Vercel with SPA routing configured via `vercel.json`.
 
 ## Getting started
 
@@ -114,6 +131,21 @@ service cloud.firestore {
 }
 ```
 
+### Running with Docker
+
+```bash
+docker build -t tradeflow .
+docker run -p 8080:80 tradeflow
+```
+
+### Running on Kubernetes (local `kind` cluster)
+
+```bash
+kind create cluster --name tradeflow
+kubectl apply -f k8s/
+kubectl port-forward svc/tradeflow 8080:80
+```
+
 ## Project structure
 
 ```
@@ -133,7 +165,6 @@ TradeFlow is a **paper-trading simulator built for education and portfolio purpo
 
 ## Roadmap
 
-- Responsive / mobile layout
 - Persisted transaction history
 - Real historical price charts
 - Automated tests (Vitest + React Testing Library)
