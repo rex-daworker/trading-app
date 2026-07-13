@@ -13,33 +13,36 @@ import { ToastProvider } from "./context/ToastContext";
 import { ConfirmProvider } from "./context/ConfirmContext";
 import "./index.css";
 import App from "./App.tsx";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <QueryClientProvider client={queryClient}>
-          <CurrencyProvider>
-            <AuthProvider>
-              <ProfileProvider>
-                <WatchlistProvider>
-                  <PortfolioProvider>
-                    <AlertsProvider>
-                      <ToastProvider>
-                        <ConfirmProvider>
-                          <App />
-                        </ConfirmProvider>
-                      </ToastProvider>
-                    </AlertsProvider>
-                  </PortfolioProvider>
-                </WatchlistProvider>
-              </ProfileProvider>
-            </AuthProvider>
-          </CurrencyProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <CurrencyProvider>
+              <AuthProvider>
+                <ProfileProvider>
+                  <WatchlistProvider>
+                    <PortfolioProvider>
+                      <AlertsProvider>
+                        <ToastProvider>
+                          <ConfirmProvider>
+                            <App />
+                          </ConfirmProvider>
+                        </ToastProvider>
+                      </AlertsProvider>
+                    </PortfolioProvider>
+                  </WatchlistProvider>
+                </ProfileProvider>
+              </AuthProvider>
+            </CurrencyProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>,
 );
