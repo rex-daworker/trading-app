@@ -8,6 +8,7 @@ import Account from "./pages/Account";
 import AuthPage from "./pages/AuthPage";
 import { useAuth } from "./context/AuthContext";
 import Alerts from "./pages/Alerts";
+import History from "./pages/History";
 
 function App() {
   const { user, loading } = useAuth();
@@ -34,6 +35,7 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="*" element={<Navigate to="/" replace />} />
         <Route path="/alerts" element={<Alerts />} />
+        <Route path="/history" element={<History />} />
       </Route>
     </Routes>
   );

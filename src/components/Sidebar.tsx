@@ -8,12 +8,14 @@ import {
   Settings,
   Bell,
   ChevronsLeft,
+  History,
 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", to: "/", icon: LayoutDashboard },
   { label: "Analytics", to: "/analytics", icon: LineChart },
   { label: "Alerts", to: "/alerts", icon: Bell },
+  { label: "History", to: "/history", icon: History },
   { label: "News", to: "/news", icon: Newspaper },
   { label: "Settings", to: "/settings", icon: Settings },
 ];

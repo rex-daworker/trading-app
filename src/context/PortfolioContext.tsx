@@ -5,6 +5,7 @@ import {
   collection,
   onSnapshot,
   setDoc,
+  addDoc,
   writeBatch,
 } from "firebase/firestore";
 import { db } from "../lib/firebase";
@@ -16,6 +17,16 @@ export interface Holding {
   symbol: string;
   shares: number;
   avgCost: number;
+}
+
+export interface Trade {
+  id: string;
+  symbol: string;
+  type: "buy" | "sell";
+  shares: number;
+  price: number;
+  total: number;
+  timestamp: number;
 }
 
 interface PortfolioContextValue {
@@ -69,6 +80,24 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
     };
   }, [user]);
 
+  const logTrade = async (
+    symbol: string,
+    type: "buy" | "sell",
+    shares: number,
+    price: number,
+  ) => {
+    if (!user) return;
+    const tradesRef = collection(db, "portfolios", user.uid, "trades");
+    await addDoc(tradesRef, {
+      symbol,
+      type,
+      shares,
+      price,
+      total: shares * price,
+      timestamp: Date.now(),
+    });
+  };
+
   const buy = async (symbol: string, shares: number, price: number) => {
     if (!user) return;
     const cost = shares * price;
@@ -89,6 +118,7 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
     batch.update(portfolioRef, { cash: cash - cost });
     batch.set(holdingRef, { symbol, shares: newShares, avgCost: newAvgCost });
     await batch.commit();
+    await logTrade(symbol, "buy", shares, price);
   };
 
   const sell = async (symbol: string, shares: number, price: number) => {
@@ -112,6 +142,7 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
       batch.delete(holdingRef);
     }
     await batch.commit();
+    await logTrade(symbol, "sell", shares, price);
   };
 
   return (
