@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import type { Stock, WatchlistEntry } from "../types/stock";
 import { useQuote } from "../hooks/useQuote";
+import { useCandles } from "../hooks/useCandles";
 import StockCard from "./StockCard";
 import PriceChart from "./PriceChart";
 import type { PricePoint } from "./PriceChart";
-import Skeleton from "./Skeleton";
+import CandlestickChart from "./CandlestickChart";
 import AlertBell from "./AlertBell";
+import Skeleton from "./Skeleton";
+import { useCurrency } from "../context/CurrencyContext";
 
 interface WatchlistItemProps {
   entry: WatchlistEntry;
@@ -24,6 +27,15 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
   } = useQuote(entry.symbol);
   const [history, setHistory] = useState<PricePoint[]>([]);
   const [expanded, setExpanded] = useState(false);
+  const [chartMode, setChartMode] = useState<"live" | "daily">("live");
+  const { format } = useCurrency();
+
+  const {
+    data: candles,
+    isPending: candlesPending,
+    isError: candlesError,
+    error: candlesErrorObj,
+  } = useCandles(entry.symbol, expanded && chartMode === "daily");
 
   useEffect(() => {
     if (!quote) return;
@@ -73,13 +85,58 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
     >
       {expanded && (
         <div className="mt-3">
-          <div className="mb-2 flex justify-end">
+          <div className="mb-2 flex items-center justify-between">
+            <div className="flex gap-1">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setChartMode("live");
+                }}
+                className={`rounded-md border px-2 py-0.5 text-xs ${
+                  chartMode === "live"
+                    ? "border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"
+                    : "border-gray-300 text-gray-500 dark:border-gray-600"
+                }`}
+              >
+                Live
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setChartMode("daily");
+                }}
+                className={`rounded-md border px-2 py-0.5 text-xs ${
+                  chartMode === "daily"
+                    ? "border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"
+                    : "border-gray-300 text-gray-500 dark:border-gray-600"
+                }`}
+              >
+                Daily
+              </button>
+            </div>
             <AlertBell symbol={entry.symbol} currentPrice={quote.c} />
           </div>
-          <PriceChart data={history} up={isUp} />
-          <p className="mt-1 text-xs text-gray-400">
-            Live — a new point every 15s
-          </p>
+
+          {chartMode === "live" ? (
+            <>
+              <PriceChart data={history} up={isUp} />
+              <p className="mt-1 text-xs text-gray-400">
+                Live — a new point every 15s
+              </p>
+            </>
+          ) : candlesPending ? (
+            <div className="flex h-64 items-center justify-center text-xs text-gray-400">
+              Loading daily candles…
+            </div>
+          ) : candlesError ? (
+            <div className="flex h-64 items-center justify-center text-center text-xs text-red-500">
+              {candlesErrorObj instanceof Error
+                ? candlesErrorObj.message
+                : "Couldn't load candle data"}
+            </div>
+          ) : candles ? (
+            <CandlestickChart data={candles} format={format} />
+          ) : null}
         </div>
       )}
     </StockCard>
