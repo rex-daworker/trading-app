@@ -1,18 +1,20 @@
 import { useQuotes } from "../hooks/useQuotes";
 import { useCompanyNews } from "../hooks/useCompanyNews";
 import { useWatchlist } from "../context/WatchlistContext";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 
 interface Mover {
   symbol: string;
   dp: number;
 }
 
-function timeAgo(unixSeconds: number) {
+function timeAgo(unixSeconds: number, t: TFunction) {
   const diff = Date.now() / 1000 - unixSeconds;
   const hours = Math.floor(diff / 3600);
-  if (hours < 1) return "just now";
-  if (hours < 24) return `${hours}h ago`;
-  return `${Math.floor(hours / 24)}d ago`;
+  if (hours < 1) return t("news.timeAgo.justNow");
+  if (hours < 24) return t("news.timeAgo.hoursAgo", { hours });
+  return t("news.timeAgo.daysAgo", { days: Math.floor(hours / 24) });
 }
 
 function News() {
@@ -29,23 +31,23 @@ function News() {
 
   const moverSymbols = movers.map((m) => m.symbol);
   const newsResults = useCompanyNews(moverSymbols);
-
+  const { t } = useTranslation();
   return (
     <div>
-      <h2 className="text-2xl font-bold">News</h2>
+      <h2 className="text-2xl font-bold">{t("news.title")}</h2>
       <p className="mt-1 text-gray-500 dark:text-gray-400">
-        Latest headlines for your biggest movers
+        {t("news.subtitle")}
       </p>
 
       {symbols.length === 0 && (
         <p className="mt-8 text-gray-500 dark:text-gray-400">
-          Add stocks on the Dashboard to see their news here.
+          {t("news.emptyWatchlist")}
         </p>
       )}
 
       {symbols.length > 0 && movers.length === 0 && (
         <p className="mt-8 text-gray-500 dark:text-gray-400">
-          Finding your top movers…
+          {t("news.findingMovers")}
         </p>
       )}
 
@@ -67,15 +69,19 @@ function News() {
               </div>
 
               {result?.isPending && (
-                <p className="mt-2 text-sm text-gray-400">Loading news…</p>
+                <p className="mt-2 text-sm text-gray-400">
+                  {t("news.loadingNews")}
+                </p>
               )}
               {result?.isError && (
                 <p className="mt-2 text-sm text-red-600">
-                  Couldn't load news for {m.symbol}.
+                  {t("news.loadError", { symbol: m.symbol })}
                 </p>
               )}
               {result && !result.isPending && articles.length === 0 && (
-                <p className="mt-2 text-sm text-gray-400">No recent news.</p>
+                <p className="mt-2 text-sm text-gray-400">
+                  {t("news.noRecentNews")}
+                </p>
               )}
 
               <ul className="mt-2 space-y-2">
@@ -91,7 +97,7 @@ function News() {
                         {a.headline}
                       </span>
                       <div className="mt-1 text-xs text-gray-400">
-                        {a.source} · {timeAgo(a.datetime)}
+                        {a.source} · {timeAgo(a.datetime, t)}
                       </div>
                     </a>
                   </li>

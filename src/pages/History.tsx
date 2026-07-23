@@ -1,5 +1,6 @@
 import { useTrades } from "../hooks/useTrades";
 import { useCurrency } from "../context/CurrencyContext";
+import { useTranslation } from "react-i18next";
 
 function formatDate(ts: number) {
   return new Date(ts).toLocaleString(undefined, {
@@ -11,65 +12,66 @@ function formatDate(ts: number) {
 function History() {
   const { trades, loading } = useTrades();
   const { format } = useCurrency();
+  const { t } = useTranslation();
 
   if (loading) {
     return (
       <p className="text-gray-500 dark:text-gray-400">
-        Loading your trade history…
-      </p>
+  {t("history.loading")}
+</p>
     );
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-bold">History</h2>
-      <p className="mt-1 text-gray-500 dark:text-gray-400">
-        Your full trade log
-      </p>
+     <h2 className="text-2xl font-bold">{t("history.title")}</h2>
+<p className="mt-1 text-gray-500 dark:text-gray-400">
+  {t("history.subtitle")}
+</p>
 
       {trades.length === 0 ? (
         <p className="mt-8 text-gray-500 dark:text-gray-400">
-          No trades yet. Head to the Dashboard to make your first trade.
+          {t("history.empty")}
         </p>
       ) : (
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="border-b border-gray-200 text-xs uppercase tracking-wide text-gray-500 dark:border-gray-700 dark:text-gray-400">
-                <th className="py-2 pr-4">Date</th>
-                <th className="py-2 pr-4">Symbol</th>
-                <th className="py-2 pr-4">Type</th>
-                <th className="py-2 pr-4">Shares</th>
-                <th className="py-2 pr-4">Price</th>
-                <th className="py-2 pr-4">Total</th>
+                <th className="py-2 pr-4">{t("history.columns.date")}</th>
+<th className="py-2 pr-4">{t("history.columns.symbol")}</th>
+<th className="py-2 pr-4">{t("history.columns.type")}</th>
+<th className="py-2 pr-4">{t("history.columns.shares")}</th>
+<th className="py-2 pr-4">{t("history.columns.price")}</th>
+<th className="py-2 pr-4">{t("history.columns.total")}</th>
               </tr>
             </thead>
             <tbody>
-              {trades.map((t) => (
-                <tr
-                  key={t.id}
-                  className="border-b border-gray-100 dark:border-gray-800"
-                >
-                  <td className="py-2 pr-4 text-gray-500 dark:text-gray-400">
-                    {formatDate(t.timestamp)}
-                  </td>
-                  <td className="py-2 pr-4 font-medium">{t.symbol}</td>
-                  <td className="py-2 pr-4">
-                    <span
-                      className={`rounded-md px-2 py-0.5 text-xs font-medium ${
-                        t.type === "buy"
-                          ? "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-400"
-                          : "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400"
-                      }`}
-                    >
-                      {t.type === "buy" ? "Buy" : "Sell"}
-                    </span>
-                  </td>
-                  <td className="py-2 pr-4">{t.shares}</td>
-                  <td className="py-2 pr-4">{format(t.price)}</td>
-                  <td className="py-2 pr-4">{format(t.total)}</td>
-                </tr>
-              ))}
+              {trades.map((trade) => (
+  <tr
+    key={trade.id}
+    className="border-b border-gray-100 dark:border-gray-800"
+  >
+    <td className="py-2 pr-4 text-gray-500 dark:text-gray-400">
+      {formatDate(trade.timestamp)}
+    </td>
+    <td className="py-2 pr-4 font-medium">{trade.symbol}</td>
+    <td className="py-2 pr-4">
+      <span
+        className={`rounded-md px-2 py-0.5 text-xs font-medium ${
+          trade.type === "buy"
+            ? "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-400"
+            : "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400"
+        }`}
+      >
+        {trade.type === "buy" ? t("history.buy") : t("history.sell")}
+      </span>
+    </td>
+    <td className="py-2 pr-4">{trade.shares}</td>
+    <td className="py-2 pr-4">{format(trade.price)}</td>
+    <td className="py-2 pr-4">{format(trade.total)}</td>
+  </tr>
+))}
             </tbody>
           </table>
         </div>

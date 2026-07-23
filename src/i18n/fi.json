@@ -1,0 +1,160 @@
+{
+  "app": { "title": "TradeFlow — Paperikaupankäynti" },
+  "dashboard": {
+    "title": "Kojelauta",
+    "subtitle": "Valvontalistasi — reaaliaikaiset hinnat",
+    "removeStock": {
+      "title": "Poista osake",
+      "message": "Poista {{symbol}} valvontalistastasi?",
+      "confirmLabel": "Poista",
+      "toast": "Poistettu {{symbol}}"
+    },
+    "overview": {
+      "stocksTracked": "Seurattavat osakkeet",
+      "topGainer": "Suurin nousija",
+      "topLoser": "Suurin laskija",
+      "avgChange": "Keskimuutos"
+    },
+    "search": {
+      "placeholder": "Hae symbolia (esim. MSFT)…",
+      "searching": "Haetaan…",
+      "noMatches": "Ei osumia.",
+      "added": "Lisätty",
+      "add": "+ Lisää"
+    },
+    "watchlistItem": {
+      "loadError": "Lataus epäonnistui: {{symbol}}",
+      "live": "Reaaliaikainen",
+      "daily": "Päivittäinen",
+      "liveCaption": "Reaaliaikainen — uusi piste 15 sekunnin välein",
+      "loadingCandles": "Ladataan päivittäisiä kynttiläkuvioita…",
+      "candleError": "Kynttiläkuviodatan lataaminen epäonnistui"
+    },
+    "stockCard": {
+      "removeAria": "Poista {{symbol}}"
+    },
+    "buyControl": {
+      "qtyPlaceholder": "Määrä",
+      "buy": "Osta",
+      "errors": {
+        "invalidQty": "Syötä positiivinen määrä",
+        "insufficientCash": "Ei tarpeeksi käteistä",
+        "tradeFailed": "Kauppa epäonnistui"
+      },
+      "boughtToast": "Ostettu {{shares}} {{symbol}}"
+    },
+    "alertBell": {
+      "setAlertAria": "Aseta hintahälytys",
+      "close": "Sulje",
+      "alertMeWhen": "Hälytä minulle, kun",
+      "above": "Yli",
+      "below": "Alle",
+      "targetPlaceholder": "esim. {{price}}",
+      "setAlert": "Aseta hälytys"
+    }
+  },
+
+  "analytics": {
+    "title": "Analytiikka",
+    "subtitle": "Paperikaupankäyntisalkkusi",
+    "loading": "Ladataan salkkuasi…",
+    "stats": {
+      "cash": "Käteinen",
+      "holdingsValue": "Omistusten arvo",
+      "portfolioValue": "Salkun arvo"
+    },
+    "empty": "Et ole vielä ostanut mitään. Siirry kojelaudalle tehdäksesi ensimmäisen kaupan.",
+    "allocation": "Jakauma",
+    "filterPlaceholder": "Suodata symbolin mukaan…",
+    "columns": {
+      "symbol": "Symboli",
+      "shares": "Osakkeet",
+      "avgCost": "Keskihinta",
+      "price": "Hinta",
+      "value": "Arvo",
+      "pl": "Tulos",
+      "sell": "Myy"
+    },
+    "noMatch": "Ei osumia haulle \"{{search}}\""
+  },
+  "alerts": {
+    "title": "Hälytykset",
+    "subtitle": "Hallitse hintahälytyksiäsi",
+    "empty": "Hälytyksiä ei ole vielä asetettu. Laajenna osake kojelaudalla lisätäksesi yhden.",
+    "triggered": "lauennut",
+    "remove": "Poista"
+  },
+  "history": {
+    "title": "Historia",
+    "subtitle": "Koko kauppahistoriasi",
+    "loading": "Ladataan kauppahistoriaasi…",
+    "empty": "Ei kauppoja vielä. Siirry kojelaudalle tehdäksesi ensimmäisen kaupan.",
+    "columns": {
+      "date": "Päivämäärä",
+      "symbol": "Symboli",
+      "type": "Tyyppi",
+      "shares": "Osakkeet",
+      "price": "Hinta",
+      "total": "Yhteensä"
+    },
+    "buy": "Osta",
+    "sell": "Myy"
+  },
+  "news": {
+    "title": "Uutiset",
+    "subtitle": "Viimeisimmät otsikot suurimmille liikkujillesi",
+    "emptyWatchlist": "Lisää osakkeita kojelaudalla nähdäksesi niiden uutiset täällä.",
+    "findingMovers": "Etsitään suurimpia liikkujiasi…",
+    "loadingNews": "Ladataan uutisia…",
+    "loadError": "Uutisten lataaminen epäonnistui symbolille {{symbol}}.",
+    "noRecentNews": "Ei viimeaikaisia uutisia.",
+    "timeAgo": {
+      "justNow": "juuri nyt",
+      "hoursAgo": "{{hours}} t sitten",
+      "daysAgo": "{{days}} pv sitten"
+    }
+  },
+  "settings": {
+    "title": "Asetukset",
+    "currency": {
+      "label": "Näyttövaluutta",
+      "names": {
+        "USD": "Yhdysvaltain dollari",
+        "EUR": "Euro",
+        "GBP": "Englannin punta",
+        "NGN": "Nigerian naira"
+      },
+      "priceNote": "Sovelluksen hinnat näytetään valuutassa {{currency}}",
+      "priceNoteRate": " (1 USD ≈ {{rate}} {{currency}})"
+    },
+    "notifications": {
+      "label": "Ilmoitukset",
+      "enabled": "Selainilmoitukset ovat käytössä.",
+      "prompt": "Ota selainilmoitukset käyttöön saadaksesi hälytyksen, kun hintatavoite saavutetaan.",
+      "enableButton": "Ota ilmoitukset käyttöön"
+    }
+  },
+  "nav": {
+    "dashboard": "Kojelauta",
+    "analytics": "Analytiikka",
+    "alerts": "Hälytykset",
+    "history": "Historia",
+    "news": "Uutiset",
+    "settings": "Asetukset"
+  },
+  "greeting": {
+    "morning": "Hyvää huomenta",
+    "afternoon": "Hyvää iltapäivää",
+    "evening": "Hyvää iltaa"
+  },
+  "sidebar": {
+    "closeMenu": "Sulje valikko",
+    "logout": "Kirjaudu ulos",
+    "logoutConfirm": {
+      "title": "Kirjaudu ulos",
+      "message": "Haluatko varmasti kirjautua ulos?",
+      "confirmLabel": "Kirjaudu ulos",
+      "cancelLabel": "Peruuta"
+    }
+  }
+}

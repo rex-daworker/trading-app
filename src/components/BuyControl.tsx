@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePortfolio } from "../context/PortfolioContext";
 import { useCurrency } from "../context/CurrencyContext";
 import { useToast } from "../context/ToastContext";
+import { useTranslation } from "react-i18next";
 
 interface BuyControlProps {
   symbol: string;
@@ -15,28 +16,31 @@ function BuyControl({ symbol, price }: BuyControlProps) {
   const [qty, setQty] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-
+  const { t } = useTranslation();
   const shares = Number(qty);
   const cost = shares * price;
 
   const handleBuy = async () => {
     setError("");
     if (!Number.isFinite(shares) || shares <= 0) {
-      setError("Enter a positive quantity");
+      setError(t("dashboard.buyControl.errors.invalidQty"));
       return;
     }
     if (cost > cash) {
-      setError("Not enough cash");
+      setError(t("dashboard.buyControl.errors.insufficientCash"));
       return;
     }
     setBusy(true);
     try {
       await buy(symbol, shares, price);
       setQty("");
-      showToast(`Bought ${shares} ${symbol}`, "success");
+      showToast(
+        t("dashboard.buyControl.boughtToast", { shares, symbol }),
+        "success",
+      );
     } catch {
-      setError("Trade failed");
-      showToast("Trade failed", "error");
+      setError(t("dashboard.buyControl.errors.tradeFailed"));
+      showToast(t("dashboard.buyControl.errors.tradeFailed"), "error");
     } finally {
       setBusy(false);
     }
@@ -52,7 +56,7 @@ function BuyControl({ symbol, price }: BuyControlProps) {
         min="0"
         value={qty}
         onChange={(e) => setQty(e.target.value)}
-        placeholder="Qty"
+        placeholder={t("dashboard.buyControl.qtyPlaceholder")}
         className="w-16 rounded border border-gray-300 px-2 py-1 text-sm dark:border-gray-600 dark:bg-gray-900"
       />
       <button
@@ -60,7 +64,7 @@ function BuyControl({ symbol, price }: BuyControlProps) {
         disabled={busy}
         className="rounded bg-blue-600 px-3 py-1 text-sm text-white hover:bg-blue-700 disabled:opacity-50"
       >
-        Buy
+        {t("dashboard.buyControl.buy")}
       </button>
       {shares > 0 && !error && (
         <span className="text-xs text-gray-500 dark:text-gray-400">

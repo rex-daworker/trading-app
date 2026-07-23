@@ -121,20 +121,18 @@ function CandlestickChart({ data, format }: CandlestickChartProps) {
               tickFormatter={(v: number) => format(v)}
             />
             <Tooltip
-              labelFormatter={(label) => formatDate(Number(label))}
-              formatter={(_value, _name, item) => {
-                const d = item.payload as Candle;
-                return [
-                  `O ${format(d.o)} · H ${format(d.h)} · L ${format(d.l)} · C ${format(d.c)}`,
-                  "",
-                ];
-              }}
-              contentStyle={{
-                background: "#111827",
-                border: "1px solid #374151",
-                borderRadius: 8,
-                color: "#f9fafb",
-                fontSize: 12,
+              content={({ active, payload }) => {
+                if (!active || !payload || !payload.length) return null;
+                const d = payload[0].payload as Candle;
+                return (
+                  <div className="rounded-lg border border-gray-700 bg-gray-900 px-3 py-2 text-xs text-gray-100 shadow-lg">
+                    <div className="mb-1 font-medium">{formatDate(d.t)}</div>
+                    <div>
+                      O {format(d.o)} · H {format(d.h)} · L {format(d.l)} · C{" "}
+                      {format(d.c)}
+                    </div>
+                  </div>
+                );
               }}
             />
             <Bar dataKey={(d: Candle) => [d.l, d.h]} shape={CandleShape} />

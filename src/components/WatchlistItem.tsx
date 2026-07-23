@@ -9,6 +9,7 @@ import CandlestickChart from "./CandlestickChart";
 import AlertBell from "./AlertBell";
 import Skeleton from "./Skeleton";
 import { useCurrency } from "../context/CurrencyContext";
+import { useTranslation } from "react-i18next";
 
 interface WatchlistItemProps {
   entry: WatchlistEntry;
@@ -29,7 +30,7 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
   const [expanded, setExpanded] = useState(false);
   const [chartMode, setChartMode] = useState<"live" | "daily">("live");
   const { format } = useCurrency();
-
+  const { t } = useTranslation();
   const {
     data: candles,
     isPending: candlesPending,
@@ -62,7 +63,7 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
   if (isError) {
     return (
       <div className={`${boxClasses} text-red-600`}>
-        Couldn't load {entry.symbol}
+        {t("dashboard.watchlistItem.loadError", { symbol: entry.symbol })}
       </div>
     );
   }
@@ -98,7 +99,7 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
                     : "border-gray-300 text-gray-500 dark:border-gray-600"
                 }`}
               >
-                Live
+                {t("dashboard.watchlistItem.live")}
               </button>
               <button
                 onClick={(e) => {
@@ -111,7 +112,7 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
                     : "border-gray-300 text-gray-500 dark:border-gray-600"
                 }`}
               >
-                Daily
+                {t("dashboard.watchlistItem.daily")}
               </button>
             </div>
             <AlertBell symbol={entry.symbol} currentPrice={quote.c} />
@@ -121,18 +122,18 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
             <>
               <PriceChart data={history} up={isUp} />
               <p className="mt-1 text-xs text-gray-400">
-                Live — a new point every 15s
+                {t("dashboard.watchlistItem.liveCaption")}
               </p>
             </>
           ) : candlesPending ? (
             <div className="flex h-64 items-center justify-center text-xs text-gray-400">
-              Loading daily candles…
+              {t("dashboard.watchlistItem.loadingCandles")}
             </div>
           ) : candlesError ? (
             <div className="flex h-64 items-center justify-center text-center text-xs text-red-500">
               {candlesErrorObj instanceof Error
                 ? candlesErrorObj.message
-                : "Couldn't load candle data"}
+                : t("dashboard.watchlistItem.candleError")}
             </div>
           ) : candles ? (
             <CandlestickChart data={candles} format={format} />

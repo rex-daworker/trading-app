@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Bell, BellRing, X } from "lucide-react";
 import { useAlerts } from "../context/AlertsContext";
+import { useTranslation } from "react-i18next";
 
 interface AlertBellProps {
   symbol: string;
@@ -22,7 +23,7 @@ function AlertBell({ symbol, currentPrice }: AlertBellProps) {
     setTargetPrice("");
     setOpen(false);
   };
-
+  const { t } = useTranslation();
   return (
     <div className="relative">
       <button
@@ -31,7 +32,7 @@ function AlertBell({ symbol, currentPrice }: AlertBellProps) {
           setOpen(!open);
         }}
         className="rounded-md p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-        aria-label="Set price alert"
+        aria-label={t("dashboard.alertBell.setAlertAria")}
       >
         {existing.length > 0 ? (
           <BellRing size={16} className="text-blue-500" />
@@ -47,9 +48,13 @@ function AlertBell({ symbol, currentPrice }: AlertBellProps) {
         >
           <div className="mb-2 flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-              Alert me when
+              {t("dashboard.alertBell.alertMeWhen")}
             </span>
-            <button onClick={() => setOpen(false)} aria-label="Close">
+            <button
+              onClick={() => setOpen(false)}
+              aria-label={t("dashboard.alertBell.close")}
+            >
+              {" "}
               <X size={14} className="text-gray-400" />
             </button>
           </div>
@@ -65,7 +70,9 @@ function AlertBell({ symbol, currentPrice }: AlertBellProps) {
                     : "border-gray-300 text-gray-500 dark:border-gray-600"
                 }`}
               >
-                {d === "above" ? "Above" : "Below"}
+                {d === "above"
+                  ? t("dashboard.alertBell.above")
+                  : t("dashboard.alertBell.below")}
               </button>
             ))}
           </div>
@@ -73,7 +80,9 @@ function AlertBell({ symbol, currentPrice }: AlertBellProps) {
           <input
             type="number"
             step="0.01"
-            placeholder={`e.g. ${currentPrice.toFixed(2)}`}
+            placeholder={t("dashboard.alertBell.targetPlaceholder", {
+              price: currentPrice.toFixed(2),
+            })}
             value={targetPrice}
             onChange={(e) => setTargetPrice(e.target.value)}
             className="mb-2 w-full rounded-md border border-gray-300 px-2 py-1 text-sm dark:border-gray-600 dark:bg-gray-900"
@@ -83,7 +92,7 @@ function AlertBell({ symbol, currentPrice }: AlertBellProps) {
             onClick={handleAdd}
             className="w-full rounded-md bg-blue-600 px-2 py-1 text-xs font-medium text-white hover:bg-blue-700"
           >
-            Set alert
+            {t("dashboard.alertBell.setAlert")}
           </button>
 
           {existing.length > 0 && (
@@ -100,7 +109,7 @@ function AlertBell({ symbol, currentPrice }: AlertBellProps) {
                     onClick={() => removeAlert(a.id)}
                     className="text-red-500 hover:underline"
                   >
-                    Remove
+                    {t("alerts.remove")}
                   </button>
                 </li>
               ))}

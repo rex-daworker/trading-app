@@ -4,6 +4,7 @@ import type { Stock } from "../types/stock";
 import { useCurrency } from "../context/CurrencyContext";
 import { usePriceFlash } from "../hooks/usePriceFlash";
 import BuyControl from "./BuyControl";
+import { useTranslation } from "react-i18next";
 
 interface StockCardProps {
   stock: Stock;
@@ -23,7 +24,7 @@ function StockCard({
   const isUp = stock.changePercent >= 0;
   const { format } = useCurrency();
   const flash = usePriceFlash(stock.price);
-
+  const { t } = useTranslation();
   return (
     <div
       onClick={onClick}
@@ -39,7 +40,7 @@ function StockCard({
             e.stopPropagation();
             onRemove();
           }}
-          aria-label={`Remove ${stock.symbol}`}
+          aria-label={t("dashboard.stockCard.removeAria", { symbol: stock.symbol })}
           className="absolute right-2 top-2 text-gray-400 hover:text-red-600"
         >
           <X size={16} />

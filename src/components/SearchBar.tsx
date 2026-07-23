@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import { useSymbolSearch } from "../hooks/useSymbolSearch";
 import type { WatchlistEntry } from "../types/stock";
-
+import { useTranslation } from "react-i18next";
 interface SearchBarProps {
   onAdd: (entry: WatchlistEntry) => void;
   existingSymbols: string[];
@@ -18,7 +18,7 @@ function SearchBar({ onAdd, existingSymbols }: SearchBarProps) {
     onAdd({ symbol, name: description, currency: "USD" });
     setQuery("");
   };
-
+  const { t } = useTranslation();
   return (
     <div className="relative mb-6 w-full max-w-sm">
       <Search
@@ -27,7 +27,7 @@ function SearchBar({ onAdd, existingSymbols }: SearchBarProps) {
       />
       <input
         type="text"
-        placeholder="Search a symbol (e.g. MSFT)…"
+        placeholder={t("dashboard.search.placeholder")}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         className="w-full rounded-md border border-gray-300 py-2 pl-9 pr-3 dark:border-gray-600 dark:bg-gray-800"
@@ -35,10 +35,14 @@ function SearchBar({ onAdd, existingSymbols }: SearchBarProps) {
       {debouncedQuery.trim().length > 0 && (
         <div className="absolute z-10 mt-1 max-h-72 w-full overflow-auto rounded-md border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
           {isFetching && (
-            <p className="p-3 text-sm text-gray-400">Searching…</p>
+            <p className="p-3 text-sm text-gray-400">
+              {t("dashboard.search.searching")}
+            </p>
           )}
           {!isFetching && results && results.length === 0 && (
-            <p className="p-3 text-sm text-gray-400">No matches.</p>
+            <p className="p-3 text-sm text-gray-400">
+              {t("dashboard.search.noMatches")}
+            </p>
           )}
           {!isFetching &&
             results &&
@@ -58,7 +62,9 @@ function SearchBar({ onAdd, existingSymbols }: SearchBarProps) {
                     </span>
                   </span>
                   <span className="text-xs text-blue-600">
-                    {already ? "Added" : "+ Add"}
+                    {already
+                      ? t("dashboard.search.added")
+                      : t("dashboard.search.add")}
                   </span>
                 </button>
               );

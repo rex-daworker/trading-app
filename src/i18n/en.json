@@ -1,0 +1,160 @@
+{
+  "app": { "title": "TradeFlow — Paper Trading" },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Your watchlist — live prices",
+    "removeStock": {
+      "title": "Remove stock",
+      "message": "Remove {{symbol}} from your watchlist?",
+      "confirmLabel": "Remove",
+      "toast": "Removed {{symbol}}"
+    },
+    "overview": {
+      "stocksTracked": "Stocks tracked",
+      "topGainer": "Top gainer",
+      "topLoser": "Top loser",
+      "avgChange": "Avg change"
+    },
+    "search": {
+      "placeholder": "Search a symbol (e.g. MSFT)…",
+      "searching": "Searching…",
+      "noMatches": "No matches.",
+      "added": "Added",
+      "add": "+ Add"
+    },
+    "watchlistItem": {
+      "loadError": "Couldn't load {{symbol}}",
+      "live": "Live",
+      "daily": "Daily",
+      "liveCaption": "Live — a new point every 15s",
+      "loadingCandles": "Loading daily candles…",
+      "candleError": "Couldn't load candle data"
+    },
+    "stockCard": {
+      "removeAria": "Remove {{symbol}}"
+    },
+    "buyControl": {
+      "qtyPlaceholder": "Qty",
+      "buy": "Buy",
+      "errors": {
+        "invalidQty": "Enter a positive quantity",
+        "insufficientCash": "Not enough cash",
+        "tradeFailed": "Trade failed"
+      },
+      "boughtToast": "Bought {{shares}} {{symbol}}"
+    },
+    "alertBell": {
+      "setAlertAria": "Set price alert",
+      "close": "Close",
+      "alertMeWhen": "Alert me when",
+      "above": "Above",
+      "below": "Below",
+      "targetPlaceholder": "e.g. {{price}}",
+      "setAlert": "Set alert"
+    }
+  },
+  "analytics": {
+    "title": "Analytics",
+    "subtitle": "Your paper-trading portfolio",
+    "loading": "Loading your portfolio…",
+    "stats": {
+      "cash": "Cash",
+      "holdingsValue": "Holdings value",
+      "portfolioValue": "Portfolio value"
+    },
+    "empty": "You haven't bought anything yet. Head to the Dashboard to make your first trade.",
+    "allocation": "Allocation",
+    "filterPlaceholder": "Filter by symbol…",
+    "columns": {
+      "symbol": "Symbol",
+      "shares": "Shares",
+      "avgCost": "Avg cost",
+      "price": "Price",
+      "value": "Value",
+      "pl": "P/L",
+      "sell": "Sell"
+    },
+    "noMatch": "No holdings match \"{{search}}\""
+  },
+
+  "alerts": {
+    "title": "Alerts",
+    "subtitle": "Manage your price alerts",
+    "empty": "No alerts set yet. Expand a stock on the Dashboard to add one.",
+    "triggered": "triggered",
+    "remove": "Remove"
+  },
+  "history": {
+    "title": "History",
+    "subtitle": "Your full trade log",
+    "loading": "Loading your trade history…",
+    "empty": "No trades yet. Head to the Dashboard to make your first trade.",
+    "columns": {
+      "date": "Date",
+      "symbol": "Symbol",
+      "type": "Type",
+      "shares": "Shares",
+      "price": "Price",
+      "total": "Total"
+    },
+    "buy": "Buy",
+    "sell": "Sell"
+  },
+  "news": {
+    "title": "News",
+    "subtitle": "Latest headlines for your biggest movers",
+    "emptyWatchlist": "Add stocks on the Dashboard to see their news here.",
+    "findingMovers": "Finding your top movers…",
+    "loadingNews": "Loading news…",
+    "loadError": "Couldn't load news for {{symbol}}.",
+    "noRecentNews": "No recent news.",
+    "timeAgo": {
+      "justNow": "just now",
+      "hoursAgo": "{{hours}}h ago",
+      "daysAgo": "{{days}}d ago"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "currency": {
+      "label": "Display currency",
+      "names": {
+        "USD": "US Dollar",
+        "EUR": "Euro",
+        "GBP": "British Pound",
+        "NGN": "Nigerian Naira"
+      },
+      "priceNote": "Prices across the app are shown in {{currency}}",
+      "priceNoteRate": " (1 USD ≈ {{rate}} {{currency}})"
+    },
+    "notifications": {
+      "label": "Notifications",
+      "enabled": "Browser notifications are enabled.",
+      "prompt": "Enable browser notifications to get alerted when a price target hits.",
+      "enableButton": "Enable notifications"
+    }
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "analytics": "Analytics",
+    "alerts": "Alerts",
+    "history": "History",
+    "news": "News",
+    "settings": "Settings"
+  },
+  "greeting": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening"
+  },
+  "sidebar": {
+    "closeMenu": "Close menu",
+    "logout": "Logout",
+    "logoutConfirm": {
+      "title": "Log out",
+      "message": "Are you sure you want to log out?",
+      "confirmLabel": "Log out",
+      "cancelLabel": "Cancel"
+    }
+  }
+}

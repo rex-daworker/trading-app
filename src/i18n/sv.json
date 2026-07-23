@@ -1,0 +1,159 @@
+{
+  "app": { "title": "TradeFlow — Pappershandel" },
+  "dashboard": {
+    "title": "Översikt",
+    "subtitle": "Din bevakningslista — live-priser",
+    "removeStock": {
+      "title": "Ta bort aktie",
+      "message": "Ta bort {{symbol}} från din bevakningslista?",
+      "confirmLabel": "Ta bort",
+      "toast": "Borttagen {{symbol}}"
+    },
+    "overview": {
+      "stocksTracked": "Bevakade aktier",
+      "topGainer": "Största vinnare",
+      "topLoser": "Största förlorare",
+      "avgChange": "Genomsnittlig förändring"
+    },
+    "search": {
+      "placeholder": "Sök en symbol (t.ex. MSFT)…",
+      "searching": "Söker…",
+      "noMatches": "Inga träffar.",
+      "added": "Tillagd",
+      "add": "+ Lägg till"
+    },
+    "watchlistItem": {
+      "loadError": "Kunde inte ladda {{symbol}}",
+      "live": "Live",
+      "daily": "Dagligen",
+      "liveCaption": "Live — en ny punkt var 15:e sekund",
+      "loadingCandles": "Laddar dagliga candlesticks…",
+      "candleError": "Kunde inte ladda candlestick-data"
+    },
+    "stockCard": {
+      "removeAria": "Ta bort {{symbol}}"
+    },
+    "buyControl": {
+      "qtyPlaceholder": "Antal",
+      "buy": "Köp",
+      "errors": {
+        "invalidQty": "Ange ett positivt antal",
+        "insufficientCash": "Otillräckliga kontanter",
+        "tradeFailed": "Affären misslyckades"
+      },
+      "boughtToast": "Köpte {{shares}} {{symbol}}"
+    },
+    "alertBell": {
+      "setAlertAria": "Ange prisvarning",
+      "close": "Stäng",
+      "alertMeWhen": "Varna mig när",
+      "above": "Över",
+      "below": "Under",
+      "targetPlaceholder": "t.ex. {{price}}",
+      "setAlert": "Ange varning"
+    }
+  },
+  "analytics": {
+    "title": "Analys",
+    "subtitle": "Din pappershandelsportfölj",
+    "loading": "Laddar din portfölj…",
+    "stats": {
+      "cash": "Kontanter",
+      "holdingsValue": "Innehavens värde",
+      "portfolioValue": "Portföljens värde"
+    },
+    "empty": "Du har inte köpt något än. Gå till Översikt för att göra din första affär.",
+    "allocation": "Fördelning",
+    "filterPlaceholder": "Filtrera efter symbol…",
+    "columns": {
+      "symbol": "Symbol",
+      "shares": "Aktier",
+      "avgCost": "Snittkurs",
+      "price": "Pris",
+      "value": "Värde",
+      "pl": "Vinst/förlust",
+      "sell": "Sälj"
+    },
+    "noMatch": "Inga innehav matchar \"{{search}}\""
+  },
+  "alerts": {
+    "title": "Varningar",
+    "subtitle": "Hantera dina prisvarningar",
+    "empty": "Inga varningar inställda än. Expandera en aktie på Översikt för att lägga till en.",
+    "triggered": "utlöst",
+    "remove": "Ta bort"
+  },
+  "history": {
+    "title": "Historik",
+    "subtitle": "Din fullständiga handelslogg",
+    "loading": "Laddar din handelshistorik…",
+    "empty": "Inga affärer än. Gå till Översikt för att göra din första affär.",
+    "columns": {
+      "date": "Datum",
+      "symbol": "Symbol",
+      "type": "Typ",
+      "shares": "Aktier",
+      "price": "Pris",
+      "total": "Totalt"
+    },
+    "buy": "Köp",
+    "sell": "Sälj"
+  },
+  "news": {
+    "title": "Nyheter",
+    "subtitle": "Senaste rubrikerna för dina största rörelser",
+    "emptyWatchlist": "Lägg till aktier på Översikt för att se deras nyheter här.",
+    "findingMovers": "Hittar dina största rörelser…",
+    "loadingNews": "Laddar nyheter…",
+    "loadError": "Kunde inte ladda nyheter för {{symbol}}.",
+    "noRecentNews": "Inga senaste nyheter.",
+    "timeAgo": {
+      "justNow": "just nu",
+      "hoursAgo": "{{hours}} tim sedan",
+      "daysAgo": "{{days}} d sedan"
+    }
+  },
+  "settings": {
+    "title": "Inställningar",
+    "currency": {
+      "label": "Visningsvaluta",
+      "names": {
+        "USD": "Amerikansk dollar",
+        "EUR": "Euro",
+        "GBP": "Brittiskt pund",
+        "NGN": "Nigeriansk naira"
+      },
+      "priceNote": "Priser i appen visas i {{currency}}",
+      "priceNoteRate": " (1 USD ≈ {{rate}} {{currency}})"
+    },
+    "notifications": {
+      "label": "Aviseringar",
+      "enabled": "Webbläsaraviseringar är aktiverade.",
+      "prompt": "Aktivera webbläsaraviseringar för att bli varnad när ett prismål nås.",
+      "enableButton": "Aktivera aviseringar"
+    }
+  },
+  "nav": {
+    "dashboard": "Översikt",
+    "analytics": "Analys",
+    "alerts": "Varningar",
+    "history": "Historik",
+    "news": "Nyheter",
+    "settings": "Inställningar"
+  },
+  "greeting": {
+    "morning": "God morgon",
+    "afternoon": "God eftermiddag",
+    "evening": "God kväll"
+  },
+  "sidebar": {
+    "closeMenu": "Stäng menyn",
+    "logout": "Logga ut",
+    "logoutConfirm": {
+      "title": "Logga ut",
+      "message": "Är du säker på att du vill logga ut?",
+      "confirmLabel": "Logga ut",
+      "cancelLabel": "Avbryt"
+    }
+  }
+}

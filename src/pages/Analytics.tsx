@@ -6,6 +6,7 @@ import { useCurrency } from "../context/CurrencyContext";
 import { useCountUp } from "../hooks/useCountUp";
 import SellControl from "../components/SellControl";
 import AllocationDonut from "../components/AllocationDonut";
+import { useTranslation } from "react-i18next";
 
 function StatCard({
   label,
@@ -45,6 +46,7 @@ function Analytics() {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("value");
   const [sortAsc, setSortAsc] = useState(false);
+  const { t } = useTranslation();
 
   const symbols = holdings.map((h) => h.symbol);
   const quotes = useQuotes(symbols);
@@ -57,7 +59,7 @@ function Analytics() {
   if (loading) {
     return (
       <p className="text-gray-500 dark:text-gray-400">
-        Loading your portfolio…
+        {t("analytics.loading")}
       </p>
     );
   }
@@ -119,30 +121,34 @@ function Analytics() {
   };
 
   const columns: { key: SortKey; label: string }[] = [
-    { key: "symbol", label: "Symbol" },
-    { key: "shares", label: "Shares" },
-    { key: "avgCost", label: "Avg cost" },
-    { key: "price", label: "Price" },
-    { key: "value", label: "Value" },
-    { key: "pl", label: "P/L" },
+    { key: "symbol", label: t("analytics.columns.symbol") },
+    { key: "shares", label: t("analytics.columns.shares") },
+    { key: "avgCost", label: t("analytics.columns.avgCost") },
+    { key: "price", label: t("analytics.columns.price") },
+    { key: "value", label: t("analytics.columns.value") },
+    { key: "pl", label: t("analytics.columns.pl") },
   ];
 
   return (
     <div>
-      <h2 className="text-2xl font-bold">Analytics</h2>
+      <h2 className="text-2xl font-bold">{t("analytics.title")}</h2>
       <p className="mt-1 text-gray-500 dark:text-gray-400">
-        Your paper-trading portfolio
+        {t("analytics.subtitle")}
       </p>
 
       <div className="mt-6 flex flex-wrap gap-4">
-        <StatCard label="Cash" value={cash} format={format} />
         <StatCard
-          label="Holdings value"
+          label={t("analytics.stats.cash")}
+          value={cash}
+          format={format}
+        />
+        <StatCard
+          label={t("analytics.stats.holdingsValue")}
           value={holdingsValue}
           format={format}
         />
         <StatCard
-          label="Portfolio value"
+          label={t("analytics.stats.portfolioValue")}
           value={portfolioValue}
           format={format}
         />
@@ -150,14 +156,13 @@ function Analytics() {
 
       {holdings.length === 0 ? (
         <p className="mt-8 text-gray-500 dark:text-gray-400">
-          You haven't bought anything yet. Head to the Dashboard to make your
-          first trade.
+          {t("analytics.empty")}
         </p>
       ) : (
         <>
           <div className="mt-8 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
             <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-              Allocation
+              {t("analytics.allocation")}
             </h3>
             <AllocationDonut data={allocation} format={format} />
           </div>
@@ -170,7 +175,7 @@ function Analytics() {
               />
               <input
                 type="text"
-                placeholder="Filter by symbol…"
+                placeholder={t("analytics.filterPlaceholder")}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full rounded-md border border-gray-300 py-1.5 pl-9 pr-3 text-sm dark:border-gray-600 dark:bg-gray-900"
@@ -200,7 +205,7 @@ function Analytics() {
                       </button>
                     </th>
                   ))}
-                  <th className="py-2 pr-4">Sell</th>
+                  <th className="py-2 pr-4">{t("analytics.columns.sell")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -210,7 +215,7 @@ function Analytics() {
                       colSpan={7}
                       className="py-6 text-center text-gray-500 dark:text-gray-400"
                     >
-                      No holdings match "{search}"
+                      {t("analytics.noMatch", { search })}
                     </td>
                   </tr>
                 ) : (

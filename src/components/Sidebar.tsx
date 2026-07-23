@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useProfile } from "../context/ProfileContext";
 import { useAuth } from "../context/AuthContext";
+import { useConfirm } from "../context/ConfirmContext";
 import {
   LayoutDashboard,
   LineChart,
@@ -9,21 +11,22 @@ import {
   Bell,
   ChevronsLeft,
   History,
+  LogOut, // add this
 } from "lucide-react";
 
 const navItems = [
-  { label: "Dashboard", to: "/", icon: LayoutDashboard },
-  { label: "Analytics", to: "/analytics", icon: LineChart },
-  { label: "Alerts", to: "/alerts", icon: Bell },
-  { label: "History", to: "/history", icon: History },
-  { label: "News", to: "/news", icon: Newspaper },
-  { label: "Settings", to: "/settings", icon: Settings },
-];
+  { key: "dashboard", to: "/", icon: LayoutDashboard },
+  { key: "analytics", to: "/analytics", icon: LineChart },
+  { key: "alerts", to: "/alerts", icon: Bell },
+  { key: "history", to: "/history", icon: History },
+  { key: "news", to: "/news", icon: Newspaper },
+  { key: "settings", to: "/settings", icon: Settings },
+] as const;
 
-function greetingForHour(h: number) {
-  if (h < 12) return "Good morning";
-  if (h < 18) return "Good afternoon";
-  return "Good evening";
+function greetingKeyForHour(h: number) {
+  if (h < 12) return "greeting.morning";
+  if (h < 18) return "greeting.afternoon";
+  return "greeting.evening";
 }
 
 interface SidebarProps {
@@ -32,8 +35,10 @@ interface SidebarProps {
 }
 
 function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const { t } = useTranslation();
   const { profile } = useProfile();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const { confirm } = useConfirm();
 
   const firstName =
     profile?.fullName?.trim().split(" ")[0] ||
@@ -45,8 +50,20 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
       : profile?.avatar === "man"
         ? "👨"
         : "🧑";
-  const greeting = greetingForHour(new Date().getHours());
+  const greeting = t(greetingKeyForHour(new Date().getHours()));
 
+  const handleLogout = async () => {
+    const ok = await confirm({
+      title: t("sidebar.logoutConfirm.title"),
+      message: t("sidebar.logoutConfirm.message"),
+      confirmLabel: t("sidebar.logoutConfirm.confirmLabel"),
+      cancelLabel: t("sidebar.logoutConfirm.cancelLabel"),
+      danger: true,
+    });
+    if (ok) {
+      logout();
+    }
+  };
   return (
     <>
       {/* Backdrop — mobile only, shown when drawer is open */}
@@ -105,7 +122,7 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
           <button
             onClick={onClose}
             className="rounded-md p-1.5 hover:bg-gray-100 dark:hover:bg-gray-700 md:hidden"
-            aria-label="Close menu"
+            aria-label={t("sidebar.closeMenu")}
           >
             <ChevronsLeft size={18} />
           </button>
@@ -152,10 +169,22 @@ function Sidebar({ isOpen, onClose }: SidebarProps) {
               }
             >
               <item.icon size={16} />
-              {item.label}
+              {t(`nav.${item.key}`)}
             </NavLink>
           ))}
         </nav>
+        <div className="mt-auto flex items-center justify-between gap-2 border-t border-gray-200 pt-3 dark:border-gray-700">
+          <span className="truncate text-xs text-gray-500 dark:text-gray-400">
+            {user?.email}
+          </span>
+          <button
+            onClick={handleLogout}
+            className="flex shrink-0 items-center gap-1.5 rounded-md border border-gray-300 px-2 py-1 text-xs hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
+            aria-label={t("sidebar.logout")}
+          >
+            <LogOut size={14} />
+          </button>
+        </div>
       </aside>
     </>
   );

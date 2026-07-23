@@ -12,6 +12,7 @@ import { AlertsProvider } from "./context/AlertsContext";
 import { ToastProvider } from "./context/ToastContext";
 import { ConfirmProvider } from "./context/ConfirmContext";
 import "./index.css";
+import "./i18n";
 import App from "./App.tsx";
 import ErrorBoundary from "./components/ErrorBoundary";
 

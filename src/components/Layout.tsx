@@ -1,17 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Sun, Moon, LogOut, Menu } from "lucide-react";
+import { Sun, Moon, Menu } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
-import { useAuth } from "../context/AuthContext";
 import Sidebar from "./Sidebar";
 import BrandWatermark from "./BrandWatermark";
 import { useAlertMonitor } from "../hooks/useAlertMonitor";
+import { useTranslation } from "react-i18next";
+
+const LANGUAGE_FLAGS: Record<string, string> = {
+  en: "🇺🇸",
+  fi: "🇫🇮",
+  sv: "🇸🇪",
+};
 
 function Layout() {
   const { theme, toggleTheme } = useTheme();
-  const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { t, i18n } = useTranslation();
   useAlertMonitor();
+  useEffect(() => {
+  document.title = t("app.title");
+}, [t, i18n.language]);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
@@ -30,11 +39,22 @@ function Layout() {
             </button>
 
             <div className="flex items-center gap-3">
-              {user && (
-                <span className="hidden text-sm text-gray-500 dark:text-gray-400 sm:inline">
-                  {user.email}
-                </span>
-              )}
+              <div className="flex items-center gap-1">
+                {Object.entries(LANGUAGE_FLAGS).map(([lng, flag]) => (
+                  <button
+                    key={lng}
+                    onClick={() => i18n.changeLanguage(lng)}
+                    className={`rounded-md px-2 py-1 text-lg ${
+                      i18n.language === lng
+                        ? "bg-blue-50 dark:bg-blue-950"
+                        : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                    }`}
+                    aria-label={lng}
+                  >
+                    {flag}
+                  </button>
+                ))}
+              </div>
               <button
                 onClick={toggleTheme}
                 className="flex items-center gap-1.5 rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
@@ -43,13 +63,6 @@ function Layout() {
                 <span className="hidden sm:inline">
                   {theme === "dark" ? "Light mode" : "Dark mode"}
                 </span>
-              </button>
-              <button
-                onClick={logout}
-                className="flex items-center gap-1.5 rounded-md border border-gray-300 px-3 py-1 text-sm hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
-              >
-                <LogOut size={16} />
-                <span className="hidden sm:inline">Log out</span>
               </button>
             </div>
           </header>
