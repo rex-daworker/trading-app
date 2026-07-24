@@ -1,3 +1,4 @@
+import { calculateBuy, calculateSell } from "../lib/portfolio";
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import {
@@ -100,44 +101,41 @@ export function PortfolioProvider({ children }: { children: ReactNode }) {
 
   const buy = async (symbol: string, shares: number, price: number) => {
     if (!user) return;
-    const cost = shares * price;
-    if (cost > cash) {
-      throw new Error("Insufficient cash");
-    }
-
-    const existing = holdings.find((h) => h.symbol === symbol);
-    const newShares = (existing?.shares ?? 0) + shares;
-    const newAvgCost = existing
-      ? (existing.shares * existing.avgCost + shares * price) / newShares
-      : price;
+    const { cash: newCash, holding } = calculateBuy(
+      cash,
+      holdings,
+      symbol,
+      shares,
+      price,
+    );
 
     const portfolioRef = doc(db, "portfolios", user.uid);
     const holdingRef = doc(db, "portfolios", user.uid, "holdings", symbol);
 
     const batch = writeBatch(db);
-    batch.update(portfolioRef, { cash: cash - cost });
-    batch.set(holdingRef, { symbol, shares: newShares, avgCost: newAvgCost });
+    batch.update(portfolioRef, { cash: newCash });
+    batch.set(holdingRef, holding);
     await batch.commit();
     await logTrade(symbol, "buy", shares, price);
   };
 
   const sell = async (symbol: string, shares: number, price: number) => {
     if (!user) return;
-    const existing = holdings.find((h) => h.symbol === symbol);
-    if (!existing || shares > existing.shares) {
-      throw new Error("Not enough shares");
-    }
-
-    const proceeds = shares * price;
-    const remaining = existing.shares - shares;
+    const { cash: newCash, remainingShares } = calculateSell(
+      cash,
+      holdings,
+      symbol,
+      shares,
+      price,
+    );
 
     const portfolioRef = doc(db, "portfolios", user.uid);
     const holdingRef = doc(db, "portfolios", user.uid, "holdings", symbol);
 
     const batch = writeBatch(db);
-    batch.update(portfolioRef, { cash: cash + proceeds });
-    if (remaining > 0) {
-      batch.update(holdingRef, { shares: remaining });
+    batch.update(portfolioRef, { cash: newCash });
+    if (remainingShares > 0) {
+      batch.update(holdingRef, { shares: remainingShares });
     } else {
       batch.delete(holdingRef);
     }

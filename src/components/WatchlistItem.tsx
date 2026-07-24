@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import type { Stock, WatchlistEntry } from "../types/stock";
 import { useQuote } from "../hooks/useQuote";
 import { useCandles } from "../hooks/useCandles";
@@ -10,7 +10,7 @@ import AlertBell from "./AlertBell";
 import Skeleton from "./Skeleton";
 import { useCurrency } from "../context/CurrencyContext";
 import { useTranslation } from "react-i18next";
-
+import { X } from "lucide-react";
 interface WatchlistItemProps {
   entry: WatchlistEntry;
   onRemove?: () => void;
@@ -62,7 +62,21 @@ function WatchlistItem({ entry, onRemove }: WatchlistItemProps) {
 
   if (isError) {
     return (
-      <div className={`${boxClasses} text-red-600`}>
+      <div className={`${boxClasses} relative text-red-600`}>
+        {onRemove && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove();
+            }}
+            aria-label={t("dashboard.stockCard.removeAria", {
+              symbol: entry.symbol,
+            })}
+            className="absolute right-2 top-2 text-gray-400 hover:text-red-600"
+          >
+            <X size={16} />
+          </button>
+        )}
         {t("dashboard.watchlistItem.loadError", { symbol: entry.symbol })}
       </div>
     );

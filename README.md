@@ -41,26 +41,29 @@ A user tracks a live stock watchlist, "buys" and "sells" with a simulated cash b
 - **Accounts & profiles** — email/password auth with an editable profile (name, date of birth, address, avatar).
 - **Dark / light mode** — persisted across sessions.
 - **Responsive layout** — usable on mobile as well as desktop.
-- **Thoughtful UX** — toast notifications, confirm dialogs for destructive actions, and shimmer loading skeletons.
+- **Thoughtful UX** — toast notifications, confirm dialogs for destructive actions (including logout), and shimmer loading skeletons.
+- **Full multi-language support** — every page and component in English, Finnish, and Swedish, with a flag-based switcher and compile-time type-checked translation keys (a bad or missing key fails the build instead of surfacing at runtime).
 
 ## Tech stack
 
-| Area             | Technology                                |
-| ---------------- | ----------------------------------------- |
-| Framework        | React 19 + TypeScript (strict)            |
-| Build tool       | Vite                                      |
-| Server state     | TanStack Query (React Query) v5           |
-| Styling          | Tailwind CSS v4                           |
-| Charts           | Recharts                                  |
-| Routing          | React Router v7                           |
-| Auth & database  | Firebase Authentication + Cloud Firestore |
-| Icons            | lucide-react                              |
-| Market data      | Finnhub (quotes, search, company news)    |
-| Exchange rates   | open.er-api.com                           |
-| Containerization | Docker (multi-stage build, nginx)         |
-| CI/CD            | GitHub Actions                            |
-| Orchestration    | Kubernetes (`kind`)                       |
-| Hosting          | Vercel                                    |
+| Area                 | Technology                                |
+| -------------------- | ----------------------------------------- |
+| Framework            | React 19 + TypeScript (strict)            |
+| Build tool           | Vite                                      |
+| Server state         | TanStack Query (React Query) v5           |
+| Styling              | Tailwind CSS v4                           |
+| Charts               | Recharts                                  |
+| Routing              | React Router v7                           |
+| Auth & database      | Firebase Authentication + Cloud Firestore |
+| Icons                | lucide-react                              |
+| Market data          | Finnhub (quotes, search, company news)    |
+| Exchange rates       | open.er-api.com                           |
+| Internationalization | react-i18next (English, Finnish, Swedish) |
+| Testing              | Vitest + React Testing Library            |
+| Containerization     | Docker (multi-stage build, nginx)         |
+| CI/CD                | GitHub Actions                            |
+| Orchestration        | Kubernetes (`kind`)                       |
+| Hosting              | Vercel                                    |
 
 ## Architecture
 
@@ -151,11 +154,13 @@ kubectl port-forward svc/tradeflow 8080:80
 ```
 src/
 ├── api/          # Finnhub + FX fetchers and their response types
-├── hooks/        # Data hooks (quotes, news) + UI hooks (count-up, price-flash, debounce)
-├── context/      # Auth, Profile, Currency, Watchlist, Portfolio, Theme, Toast, Confirm
+├── hooks/        # Data hooks (quotes, candles, news) + UI hooks (count-up, price-flash, debounce)
+├── context/      # Auth, Profile, Currency, Watchlist, Portfolio, Alerts, Theme, Toast, Confirm
 ├── components/   # Layout, Sidebar, StockCard, charts, controls, watermark, skeletons
-├── pages/        # Dashboard, Analytics, News, Settings, Account, AuthPage
-├── lib/          # Firebase initialization
+├── pages/        # Dashboard, Analytics, Alerts, History, News, Settings, Account, AuthPage
+├── i18n/         # Translation resources (en/fi/sv) and type-safe t() setup
+├── lib/          # Firebase initialization + pure portfolio math (cost basis, validation)
+├── test/         # Vitest setup
 └── types/        # Shared TypeScript types
 ```
 
@@ -165,9 +170,10 @@ TradeFlow is a **paper-trading simulator built for education and portfolio purpo
 
 ## Roadmap
 
-- Persisted transaction history
-- Real historical price charts
-- Automated tests (Vitest + React Testing Library)
+The original build plan — persisted transaction history, real historical price charts, and automated tests — is complete. Under consideration for later:
+
+- Commodity price data (oil, gold, silver) via a dedicated provider; Finnhub's quote endpoint only reliably covers US-listed equities, not commodities or non-US exchanges.
+- Wiring the test suite into the existing CI pipeline (`.github/workflows/ci.yml` currently runs lint and build, not tests).
 
 ---
 

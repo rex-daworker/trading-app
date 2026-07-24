@@ -1,4 +1,50 @@
 {
+  "account": {
+    "title": "Konto",
+    "subtitle": "Visa och redigera din profil",
+    "loading": "Laddar ditt konto…",
+    "fullName": "Fullständigt namn",
+    "dob": "Födelsedatum",
+    "address": "Adress",
+    "avatar": "Avatar",
+    "avatarMan": "Man",
+    "avatarWoman": "Kvinna",
+    "save": "Spara ändringar",
+    "saving": "Sparar…",
+    "toast": {
+      "nameRequired": "Namnet får inte vara tomt",
+      "updated": "Profil uppdaterad",
+      "saveFailed": "Kunde inte spara"
+    }
+  },
+  "auth": {
+    "login": "Logga in",
+    "createAccount": "Skapa konto",
+    "fullName": "Fullständigt namn",
+    "fullNamePlaceholder": "Anna Andersson",
+    "email": "E-post",
+    "emailPlaceholder": "du@exempel.com",
+    "password": "Lösenord",
+    "passwordHint": "Använd minst 6 tecken.",
+    "dob": "Födelsedatum",
+    "address": "Adress",
+    "addressPlaceholder": "Gata, stad, land",
+    "avatar": "Avatar",
+    "pleaseWait": "Vänta…",
+    "signUp": "Registrera dig",
+    "needAccount": "Inget konto? Registrera dig",
+    "haveAccount": "Har du redan ett konto? Logga in",
+    "errors": {
+      "fillAllFields": "Fyll i alla fält",
+      "passwordTooShort": "Lösenordet måste vara minst 6 tecken.",
+      "invalidEmail": "E-postadressen verkar ogiltig.",
+      "emailInUse": "Ett konto med denna e-post finns redan.",
+      "weakPassword": "Lösenordet bör vara minst 6 tecken.",
+      "missingPassword": "Ange ett lösenord.",
+      "wrongCredentials": "Fel e-post eller lösenord.",
+      "generic": "Något gick fel."
+    }
+  },
   "app": { "title": "TradeFlow — Pappershandel" },
   "dashboard": {
     "title": "Översikt",

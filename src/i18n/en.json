@@ -1,4 +1,50 @@
 {
+  "account": {
+    "title": "Account",
+    "subtitle": "View and edit your profile",
+    "loading": "Loading your account…",
+    "fullName": "Full name",
+    "dob": "Date of birth",
+    "address": "Address",
+    "avatar": "Avatar",
+    "avatarMan": "Man",
+    "avatarWoman": "Woman",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "toast": {
+      "nameRequired": "Name cannot be empty",
+      "updated": "Profile updated",
+      "saveFailed": "Could not save"
+    }
+  },
+  "auth": {
+    "login": "Log in",
+    "createAccount": "Create account",
+    "fullName": "Full name",
+    "fullNamePlaceholder": "Jane Doe",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "passwordHint": "Use at least 6 characters.",
+    "dob": "Date of birth",
+    "address": "Address",
+    "addressPlaceholder": "Street, city, country",
+    "avatar": "Avatar",
+    "pleaseWait": "Please wait…",
+    "signUp": "Sign up",
+    "needAccount": "Need an account? Sign up",
+    "haveAccount": "Have an account? Log in",
+    "errors": {
+      "fillAllFields": "Please fill in all fields",
+      "passwordTooShort": "Password must be at least 6 characters.",
+      "invalidEmail": "That email address looks invalid.",
+      "emailInUse": "An account with this email already exists.",
+      "weakPassword": "Password should be at least 6 characters.",
+      "missingPassword": "Please enter a password.",
+      "wrongCredentials": "Incorrect email or password.",
+      "generic": "Something went wrong."
+    }
+  },
   "app": { "title": "TradeFlow — Paper Trading" },
   "dashboard": {
     "title": "Dashboard",

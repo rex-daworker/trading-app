@@ -1,4 +1,50 @@
 {
+  "account": {
+    "title": "Tili",
+    "subtitle": "Tarkastele ja muokkaa profiiliasi",
+    "loading": "Ladataan tiliäsi…",
+    "fullName": "Koko nimi",
+    "dob": "Syntymäaika",
+    "address": "Osoite",
+    "avatar": "Avatar",
+    "avatarMan": "Mies",
+    "avatarWoman": "Nainen",
+    "save": "Tallenna muutokset",
+    "saving": "Tallennetaan…",
+    "toast": {
+      "nameRequired": "Nimi ei voi olla tyhjä",
+      "updated": "Profiili päivitetty",
+      "saveFailed": "Tallennus epäonnistui"
+    }
+  },
+  "auth": {
+    "login": "Kirjaudu sisään",
+    "createAccount": "Luo tili",
+    "fullName": "Koko nimi",
+    "fullNamePlaceholder": "Maija Meikäläinen",
+    "email": "Sähköposti",
+    "emailPlaceholder": "sina@esimerkki.com",
+    "password": "Salasana",
+    "passwordHint": "Käytä vähintään 6 merkkiä.",
+    "dob": "Syntymäaika",
+    "address": "Osoite",
+    "addressPlaceholder": "Katu, kaupunki, maa",
+    "avatar": "Avatar",
+    "pleaseWait": "Odota hetki…",
+    "signUp": "Rekisteröidy",
+    "needAccount": "Eikö sinulla ole tiliä? Rekisteröidy",
+    "haveAccount": "Onko sinulla jo tili? Kirjaudu sisään",
+    "errors": {
+      "fillAllFields": "Täytä kaikki kentät",
+      "passwordTooShort": "Salasanan on oltava vähintään 6 merkkiä.",
+      "invalidEmail": "Sähköpostiosoite vaikuttaa virheelliseltä.",
+      "emailInUse": "Tällä sähköpostilla on jo tili.",
+      "weakPassword": "Salasanan tulee olla vähintään 6 merkkiä.",
+      "missingPassword": "Anna salasana.",
+      "wrongCredentials": "Väärä sähköposti tai salasana.",
+      "generic": "Jokin meni pieleen."
+    }
+  },
   "app": { "title": "TradeFlow — Paperikaupankäynti" },
   "dashboard": {
     "title": "Kojelauta",
